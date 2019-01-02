@@ -60,9 +60,12 @@ class App extends Component {
       pop: null,
     },
     beforeAfterElements: [
-      { before: 'Manually entering key/value pairs of knowledge into Quizlet or onto flashcards, time consuming', after: 'Instant' },
-      { before: 'Mentally keep track of understanding, uncertain how to address weak points of knowledge and what they are, so ends up overstudying', after: 'Personalized' },
-      { before: 'Inflexibility of using different platforms to test oneself, annoying', after: 'All basic services in one' },
+      { before: 'My learning effiency is low. My memorization ability isn\'t good, so I have to spend a lot of time creating flashcards to test myself with.',
+        after: 'I can automate my entire routine with Quizkly! All I need is paste in the content I have to memorize and out pops multiple choice quizzes on demand.' },
+      { before: 'Testing myself is like playing cards with myself, and I don\'t have anyone who\'s always there to test my learning. Even when studying with a friend, my friend doesn\'t know my level of understanding and I may easily get distracted.',
+        after: 'I now have a tester who\'s always there, knows what I know better than I do, and becomes more personalized to my understanding over time!' },
+      { before: 'Organizing my studying is hard. I find it hard to keep track of my formative assessments, homework, and flashcards in different places.',
+        after: 'I can store, view, and test myself with these auto-generated quizzes on demand, all in one app!' },
     ],
 
   }

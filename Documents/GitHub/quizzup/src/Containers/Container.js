@@ -88,7 +88,7 @@ const NavBar = (props) => {
       <div style={{flex: 1}}>
         <button id="about" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[2].title}</button>
       </div>
-      <Overlay style={{width: '95%'}} show={props.navBar.show} target={props.navBar.target} placement="bottom" container={props.container} containerPadding={20}>
+      <Overlay style={{width: '95%', flex: 1}} show={props.navBar.show} target={props.navBar.target} placement="bottom" container={props.container} containerPadding={20}>
         <Popover id="popover-contained" title={popName}>
           { pop }
         </Popover>
