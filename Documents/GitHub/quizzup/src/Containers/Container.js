@@ -34,6 +34,7 @@ const NavBar = (props) => {
   var titles = props.navBar.buttonTitles;
   let pop = null;
   let popName = "";
+  console.log("Loading NavBar, current target is", props.navBar.target);
   if(props.navBar.target != null) {
     console.log("Found target");
     console.log(props.navBar.target);
@@ -51,7 +52,7 @@ const NavBar = (props) => {
         console.log("Got the mail");
         popName = "Sign up for our mailing list";
         pop = (
-          <div>
+          <div style={{flex: 1, width: '100%'}}>
             <MailingList />
           </div>
         );
@@ -79,14 +80,16 @@ const NavBar = (props) => {
 
   return (
     <div className="navBar">
-      <div style={{flex: 1}}>
-        <button id="demo" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[0].title}</button>
-      </div>
-      <div style={{flex: 1}}>
-        <button id="mail" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[1].title}</button>
-      </div>
-      <div style={{flex: 1}}>
-        <button id="about" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[2].title}</button>
+      <div style={{height: 50, display: 'flex', flexDirection: 'row'}}>
+        <div style={{flex: 1}}>
+          <button id="demo" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[0].title}</button>
+        </div>
+        <div style={{flex: 1}}>
+          <button id="mail" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[1].title}</button>
+        </div>
+        <div style={{flex: 1}}>
+          <button id="about" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[2].title}</button>
+        </div>
       </div>
       <Overlay style={{width: '95%', flex: 1}} show={props.navBar.show} target={props.navBar.target} placement="bottom" container={props.container} containerPadding={20}>
         <Popover id="popover-contained" title={popName}>
@@ -94,6 +97,7 @@ const NavBar = (props) => {
         </Popover>
       </Overlay>
     </div>
+
   );
 }
 

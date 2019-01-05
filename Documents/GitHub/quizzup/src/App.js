@@ -34,8 +34,13 @@ class App extends Component {
       newState.show = !this.state.navBar.show;
     }
 
-    newState.target = e.target;
+    if(e.target != null){
+      newState.target = e.target;
+    } else {
+      newState.target = document.getElementById("mail");
+    }
     console.log(e.target);
+    console.log(this.state.navBar.show);
     this.setState({navBar: newState});
     console.log(this.state.navBar.show);
   };

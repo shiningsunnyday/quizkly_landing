@@ -14,7 +14,7 @@
   margin-right: 2.5%;
   margin-bottom: 200px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
 }
 
@@ -27,6 +27,7 @@
   max-width: 5000px;
   text-align: center;
   display: flex;
+  flex: 1;
   width: 95%;
   left: 0;
   right: 0;
