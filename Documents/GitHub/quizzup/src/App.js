@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Container1, Container2, BeforeAfterFlow, NavBar } from './Containers/Container.js';
 import './App.css';
+import { PageHeader, Navbar, NavDropdown, MenuItem, NavItem, Nav, Grid, Row, Col, Popover, Overlay } from 'react-bootstrap';
+import MailingList from './Containers/NavBarItems/MailingList.js';
+import AboutUs from './Containers/NavBarItems/AboutUs.js';
+import RequestDemo from './Containers/NavBarItems/RequestDemo.js';
 
 class App extends Component {
 
@@ -26,28 +30,69 @@ class App extends Component {
   }
 
   handleClick = (e) => {
+
     var newState = {...this.state.navBar};
+    let pop = null;
+    let popName = "";
     console.log("Current target is")
     console.log(newState.target);
     if(newState.target === null || newState.target.id === e.target.id) {
-      console.log("Change show")
+      console.log("Change show from", newState.show, !this.state.navBar.show);
       newState.show = !this.state.navBar.show;
     }
 
     if(e.target != null){
       newState.target = e.target;
+      console.log("E's target", e.target);
     } else {
       newState.target = document.getElementById("mail");
+      newState.show = true;
     }
+
     console.log(e.target);
+    console.log("Found target");
+    switch(newState.target.id) {
+      case "demo":
+        console.log("Got the demo");
+        popName = "Request a demo from us";
+        pop = (
+          <div>
+            <RequestDemo value={this.state.demoValue}/>
+          </div>
+        );
+        break;
+
+      case "about":
+        console.log("Got the about");
+        popName = "Learn more about who created the app";
+        pop = (
+          <div>
+            <AboutUs />
+          </div>
+        );
+        break;
+      case "mail":
+        console.log("Got the mail");
+        popName = "Sign up for our mailing list";
+        pop = (
+          <div style={{flex: 1, width: '100%'}}>
+            <MailingList />
+          </div>
+        );
+      default:
+        console.log("Nothing");
+    }
+
+    newState.pop = pop;
+    newState.popName = popName;
+    this.setState({navBar: newState})
+    console.log("State was juset set");
     console.log(this.state.navBar.show);
-    this.setState({navBar: newState});
-    console.log(this.state.navBar.show);
-  };
+  }
 
   componentDidMount() {
     console.log("Let's click");
-    document.getElementById("mail").click();
+    console.log(document.getElementById("mail"))
   }
 
 
@@ -63,6 +108,7 @@ class App extends Component {
       target: null,
       container: this,
       pop: null,
+      popName: "",
     },
     beforeAfterElements: [
       { before: 'My learning effiency is low. My memorization ability isn\'t good, so I have to spend a lot of time creating flashcards to test myself with.',
@@ -80,7 +126,7 @@ class App extends Component {
       <div className="App">
         <Container1 />
         <BeforeAfterFlow elems={this.state.beforeAfterElements}/>
-        <NavBar navBar={this.state.navBar} handleClick={this.handleClick} handleChange={this.handleChange} validate={this.getValidationState} state={this.state}/>
+        <NavBar navBar={this.state.navBar} handleClick={this.handleClick} handleChange={this.handleChange} validate={this.getValidationState}/>
         <Container2 />
       </div>
     );

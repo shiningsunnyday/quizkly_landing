@@ -32,44 +32,9 @@ const Container2 = () => {
 
 const NavBar = (props) => {
   var titles = props.navBar.buttonTitles;
-  let pop = null;
-  let popName = "";
+  let pop = props.navBar.pop;
+  let popName = props.popName;
   console.log("Loading NavBar, current target is", props.navBar.target);
-  if(props.navBar.target != null) {
-    console.log("Found target");
-    console.log(props.navBar.target);
-    switch(props.navBar.target.id) {
-      case "demo":
-        console.log("Got the demo");
-        popName = "Request a demo from us";
-        pop = (
-          <div>
-            <RequestDemo handleChange={props.handleChange} validate={props.validate} value={props.state.demoValue}/>
-          </div>
-        );
-        break;
-      case "mail":
-        console.log("Got the mail");
-        popName = "Sign up for our mailing list";
-        pop = (
-          <div style={{flex: 1, width: '100%'}}>
-            <MailingList />
-          </div>
-        );
-        break;
-      case "about":
-        console.log("Got the about");
-        popName = "Learn more about who created the app";
-        pop = (
-          <div>
-            <AboutUs />
-          </div>
-        );
-        break;
-      default:
-        console.log("Nothing");
-    }
-  }
 
   let buttonStyle = {
       width: '100%',
@@ -91,7 +56,7 @@ const NavBar = (props) => {
           <button id="about" style={buttonStyle} onClick={props.handleClick} type="button" class="btn btn-default">{titles[2].title}</button>
         </div>
       </div>
-      <Overlay style={{width: '95%', flex: 1}} show={props.navBar.show} target={props.navBar.target} placement="bottom" container={props.container} containerPadding={20}>
+      <Overlay style={{width: '95%', flex: 1}} show={props.navBar.show} target={props.navBar.target} placement="bottom" container={props.navBar.container} containerPadding={20}>
         <Popover id="popover-contained" title={popName}>
           { pop }
         </Popover>
