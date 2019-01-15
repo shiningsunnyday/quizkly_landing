@@ -6,6 +6,18 @@ import MailingList from './Containers/NavBarItems/MailingList.js';
 import AboutUs from './Containers/NavBarItems/AboutUs.js';
 import RequestDemo from './Containers/NavBarItems/RequestDemo.js';
 
+import Header from './Components/Horizontal/Header.js';
+import Mailing from './Components/Horizontal/Mailing.js';
+import Title from './Components/Horizontal/Title.js';
+import Video from './Components/Horizontal/Video.js';
+import Visual from './Components/Horizontal/Visual.js';
+
+import HeaderV from './Components/Vertical/Header.js';
+import MailingV from './Components/Vertical/Mailing.js';
+import TitleV from './Components/Vertical/Title.js';
+import VideoV from './Components/Vertical/Video.js';
+import VisualV from './Components/Vertical/Visual.js';
+
 class App extends Component {
 
   getValidationState = () => {
@@ -152,52 +164,13 @@ class App extends Component {
       return (
         <div className="App">
           <div style={{display: 'flex', flexDirection: 'column', height: this.state.height * 0.95, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginTop: this.state.height * 0.025, marginBottom: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <div style={{flex: 2, backgroundColor: 'red'}}>
-              <h5>Automatic Multiple Choice Quiz Generation with Machine Learning</h5>
+            <HeaderV />
+            <TitleV />
+            <VisualV />
+            <VideoV />
+            <div style={{flex: 1, backgroundColor: 'white'}}>
             </div>
-            <div style={{flex: 4, display: 'flex', flexDirection: 'row', backgroundColor: 'yellow'}}>
-              <div style={{flex: 1, backgroundColor: 'purple', display: 'flex'}}>
-                <h5>Quizzes</h5>
-              </div>
-              <div style={{flex: 4, backgroundColor: 'pink'}}>
-                <h1>Quizkly</h1>
-              </div>
-              <div style={{flex: 1, backgroundColor: 'purple'}}>
-                <h5>Quickly</h5>
-              </div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', flex: 15, backgroundColor: 'green'}}>
-              <div style={{flex: 6, backgroundColor: 'red'}}>
-              </div>
-              <div style={{display: 'flex', flex: 7, flexDirection: 'column', backgroundColor: 'white'}}>
-                <div style={{flex: 3}}>
-                </div>
-                <div style={{flex: 3}}>
-                  <img style={{width: '80%', height: '20%', backgroundColor: 'gray'}} src={require('./Containers/imgs/arrow.png')} alt="..." />
-                </div>
-                <div style={{flex: 1}}>
-                </div>
-              </div>
-              <div style={{flex: 6, backgroundColor: 'red'}}>
-              </div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', flex: 8, backgroundColor: 'gray'}}>
-              <div style={{flex: 1, backgroundColor: 'purple'}}>
-
-              </div>
-              <div style={{flex: 4, backgroundColor: 'pink'}}>
-
-              </div>
-              <div style={{flex: 1, backgroundColor: 'purple'}}>
-
-              </div>
-            </div>
-            <div style={{flex: 1, backgroundColor: 'black'}} />
-            <div style={{flex: 2, display: 'flex', flexDirection: 'column', justityContent: 'spaceBetween', backgroundColor: 'red'}}>
-              <div class="form-group has-error">
-                  <input type="text" value="" placeholder="Error" class="form-control" />
-              </div>
-            </div>
+            <MailingV />
           </div>
         </div>
       );
@@ -207,54 +180,15 @@ class App extends Component {
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
           <div style={{display: 'flex', flexDirection: 'column', height: this.state.height * 0.975, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginTop: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <div style={{display: 'flex', flex: 2, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'red'}}>
-              <h5 style={{fontSize: '3vh'}}>Automatic Multiple Choice Quiz Generation with Machine Learning</h5>
-            </div>
-            <div style={{flex: 4, display: 'flex', flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'yellow'}}>
-              <div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>
-                <h5 style={{fontSize: '5vh'}}>Quizzes</h5>
-              </div>
-              <div style={{display: 'flex', flex: 4, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>
-                <span style={{fontSize: '15vh'}}>Quizkly</span>
-              </div>
-              <div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>
-                <h5 style={{fontSize: '5vh'}}>...quickly!</h5>
-              </div>
-            </div>
-            <div style={{display: 'flex', flexDirection: 'row', flex: 15, backgroundColor: 'green'}}>
-              <div style={{display: 'flex', flex: 6, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}>
-                <img style={{width: '100%', height: '80%', backgroundColor: 'gray'}} src={require('./Containers/imgs/documents_icon.jpg')} alt="..." />
-              </div>
-              <div style={{display: 'flex', flex: 7, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'white'}}>
-                <img style={{width: '80%', height: '10%', backgroundColor: 'white'}} src={require('./Containers/imgs/arrow.png')} alt="..." />
-              </div>
-              <div style={{display: 'flex', flex: 6, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', backgroundColor: 'red'}}>
-                <img style={{width: '100%', height: '100%', backgroundColor: 'white'}} src={require('./Containers/imgs/flashcard_icon.png')} alt="..." />
-              </div>
-            </div>
+            <Header />
+            <Title />
+            <Visual />
           </div>
           <div style={{display: 'flex', flexDirection: 'column', height: 2/3 * 0.975 * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <div style={{display: 'flex', flexDirection: 'row', flex: 7, backgroundColor: 'gray'}}>
-              <div style={{flex: 1, backgroundColor: 'white'}}>
-
-              </div>
-              <div style={{flex: 4, display: 'flex', flexDirection: 'column', alignItems: 'stretch', backgroundColor: 'pink'}}>
-                <iframe style={{flex: 1}} src="https://www.youtube.com/embed/AlQD5QnjfCY" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-              </div>
-              <div style={{flex: 1, backgroundColor: 'white'}}>
-
-              </div>
-            </div>
+            <Video />
             <div style={{flex: 1, backgroundColor: 'white'}}>
             </div>
-            <div style={{flex: 2, display: 'flex', flexDirection: 'column', justityContent: 'center', alignItems: 'stretch', backgroundColor: 'white'}}>
-              <div class="form-group has-error" style={{flex: 1, display: 'flex', flexDirection: 'row', alignItems: 'stretch', backgroundColor: 'white', margin: 0}}>
-                  <input type="text" value={this.state.demoValue} placeholder="Enter your mailing address to receive updates!" class="form-control" style={{flex: 1, margin: 'auto', textAlign: 'center'}}/>
-              </div>
-              <div style={{flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-                <button type="submit" className="btn btn-primary" style={{width: '10vw', backgroundColor: 'green', margin: '1px', borderRadius: '5px', fontSize: '2vh'}}>Submit</button>
-              </div>
-            </div>
+            <Mailing value={this.state.demoValue}/>
           </div>
         </div>
       </div>
