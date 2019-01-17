@@ -123,6 +123,17 @@ class App extends Component {
     // binds this once constructor loads
   }
 
+  handleSubmit() {
+
+    console.log("Hi", this.state.demoValue);
+
+    fetch('localhost:8000/api/', {
+      method: 'POST',
+      body: this.state.demoValue,
+    });
+
+  }
+
 
   state = {
     width: 0,
@@ -170,12 +181,11 @@ class App extends Component {
             <VideoV />
             <div style={{flex: 1, backgroundColor: 'white'}}>
             </div>
-            <MailingV />
+            <MailingV value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
           </div>
         </div>
       );
     }
-
     return (
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
@@ -188,7 +198,7 @@ class App extends Component {
             <Video />
             <div style={{flex: 1, backgroundColor: 'white'}}>
             </div>
-            <Mailing value={this.state.demoValue}/>
+            <Mailing value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
           </div>
         </div>
       </div>

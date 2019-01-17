@@ -1,4 +1,5 @@
 import React from 'react';
+import '../Components.css';
 
 const Title = () => {
 
@@ -7,7 +8,7 @@ const Title = () => {
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>
         <h5 style={{fontSize: '5vh'}}>Quizzes</h5>
       </div>
-      <div style={{display: 'flex', flex: 4, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>
+      <div className="titleStyle">
         <span style={{fontSize: '15vh'}}>Quizkly</span>
       </div>
       <div style={{display: 'flex', flex: 1, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'white'}}>

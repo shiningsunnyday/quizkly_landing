@@ -1,0 +1,56 @@
+.videoFrameDiv {
+  box-shadow: 10px 10px grey;
+  flex: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.titleStyle {
+  display: flex;
+  flex: 4;
+  flex-direction: column;
+  justify-content: center;
+  background-color: white;
+  box-shadow: 10px 10px 5px grey;
+}
+
+.overlay {
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  overflow: hidden;
+  width: 0;
+  height: 100%;
+  transition: .5s ease;
+}
+
+.container:hover .overlay {
+  width: 100%;
+}
+
+.text {
+  word-wrap: break-word;
+  font-size: 2.5vw;
+  position: relative;
+  overflow: hidden;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+}
+
+.container {
+  flex: 7;
+  background-color: white;
+  position: relative;
+}
+
+.videoFrame {
+  display: flex;
+  flex: 1;
+  box-shadow: 5px 5px 5px grey;
+}

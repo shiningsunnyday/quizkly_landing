@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
 
   return (
-    <div style={{display: 'flex', flex: 2, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'red'}}>
+    <div style={{display: 'flex', flex: 2, flexDirection: 'column', justifyContent: 'center', backgroundColor: 'red', borderStyle: 'ridge', borderWidth: '5px'}}>
       <h5 style={{fontSize: '2vh'}}>Automatic Multiple Choice Quiz Generation with Machine Learning</h5>
     </div>
   );
