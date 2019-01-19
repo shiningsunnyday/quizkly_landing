@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Container1, Container2, BeforeAfterFlow, NavBar } from './Containers/Container.js';
 import './App.css';
+import './style.css';
 import { PageHeader, Navbar, NavDropdown, MenuItem, NavItem, Nav, Grid, Row, Col, Popover, Overlay } from 'react-bootstrap';
 import MailingList from './Containers/NavBarItems/MailingList.js';
 import AboutUs from './Containers/NavBarItems/AboutUs.js';
@@ -189,16 +190,18 @@ class App extends Component {
     return (
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
-          <div style={{display: 'flex', flexDirection: 'column', height: this.state.height * 0.975, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginTop: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <Header />
-            <Title />
-            <Visual />
+          <div class="hero__mask" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
+          <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
+          <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
+            <Header style={{zIndex: 5,}}/>
+            <Title style={{zIndex: 5,}}/>
+            <Visual style={{zIndex: 5,}}/>
           </div>
-          <div style={{display: 'flex', flexDirection: 'column', height: 2/3 * 0.975 * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <Video />
-            <div style={{flex: 1, backgroundColor: 'white'}}>
+          <div style={{display: 'flex', flexDirection: 'column', height: 2/3 * 0.975 * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, }}>
+            <Video style={{zIndex: 5}}/>
+            <div style={{flex: 1, }}>
             </div>
-            <Mailing value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
+            <Mailing style={{zIndex: 5}} value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
           </div>
         </div>
       </div>
