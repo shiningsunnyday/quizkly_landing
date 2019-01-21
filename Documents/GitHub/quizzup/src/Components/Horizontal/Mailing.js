@@ -8,7 +8,7 @@ const Mailing = (props) => {
           <input type="text" value={props.value} placeholder="Enter your mailing address to receive updates!" class="form-control" style={{flex: 1, margin: 'auto', textAlign: 'center'}}/>
       </div>
       <div style={{flex: 1, display: 'flex', flexDirection: 'row', justifyContent: 'center'}}>
-        <button type="submit" className="btn btn-primary" style={{width: '10vw', backgroundColor: 'green', margin: '1px', borderRadius: '5px', fontSize: '2vh'}}>Submit</button>
+        <button type="submit" onClick={props.handleSubmit(props.value)} className="btn btn-primary" style={{width: '10vw', backgroundColor: 'green', margin: '1px', borderRadius: '5px', fontSize: '2vh'}}>Submit</button>
       </div>
     </div>
   );

@@ -124,14 +124,18 @@ class App extends Component {
     // binds this once constructor loads
   }
 
-  handleSubmit() {
+  handleSubmit(email) {
 
-    console.log("Hi", this.state.demoValue);
-
-    fetch('localhost:8000/api/', {
-      method: 'POST',
-      body: this.state.demoValue,
-    });
+    // fetch('localhost:8000/quizkly/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     email: email
+    //   }),
+    // });
 
   }
 
