@@ -34,6 +34,12 @@ class App extends Component {
     return null;
   }
 
+  handleFormChange = (e) => {
+    this.setState({
+      demoValue: e.target.value,
+    });
+  }
+
   handleChange = (e) => {
     console.log(e.target.value);
     this.setState({
@@ -105,6 +111,13 @@ class App extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
+
+    var whoWeAre = document.getElementById("whoWeAre");
+    whoWeAre.style.cursor = 'pointer';
+    whoWeAre.onclick = function() {
+      this.setState({about: !this.state.about});
+    }.bind(this)
+
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 
@@ -124,23 +137,27 @@ class App extends Component {
     // binds this once constructor loads
   }
 
-  handleSubmit(email) {
+  handleSubmit() {
 
-    // fetch('localhost:8000/quizkly/', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Accept': 'application/json',
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     email: email
-    //   }),
-    // });
+    console.log(this.state.demoValue);
+    fetch('http://127.0.0.1:8000/quizkly/', {
+      method: 'POST',
+
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.demoValue,
+      }),
+    });
 
   }
 
 
   state = {
+    about: false,
+    hero: "hero__mask",
     width: 0,
     height: 0,
     demoValue: "",
@@ -176,6 +193,7 @@ class App extends Component {
   // </div>
 
   render() {
+
     if(this.state.height > this.state.width) {
       return (
         <div className="App">
@@ -191,13 +209,20 @@ class App extends Component {
         </div>
       );
     }
+
+    let classname = "hero__mask";
+    if(this.state.about) {
+      classname = "hero__mask_";
+    }
+
     return (
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
-          <div class="hero__mask" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
+          <div class={classname} style={{
+            height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
           <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
           <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
-            <Header style={{zIndex: 5,}}/>
+            <Header about={this.state.about} style={{zIndex: 5,}}/>
             <Title style={{zIndex: 5,}}/>
             <Visual style={{zIndex: 5,}}/>
           </div>
@@ -205,7 +230,7 @@ class App extends Component {
             <Video style={{zIndex: 5}}/>
             <div style={{flex: 1, }}>
             </div>
-            <Mailing style={{zIndex: 5}} value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
+            <Mailing style={{zIndex: 5}} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)}/>
           </div>
         </div>
       </div>

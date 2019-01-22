@@ -886,15 +886,27 @@ select {
 .hero__overlay--gradientVertical {
   background: linear-gradient(to bottom, #6C63FF, #4641FF); }
 
+
 .hero__mask {
   position: absolute;
   width: 100%;
-  background-image: url('./Containers/imgs/student_life.jpg');
   background-size: cover;
+  background-image: url('./Containers/imgs/student_life.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0.30;
   z-index: 4.9; }
+
+.hero__mask_ {
+  position: absolute;
+  width: 100%;
+  background-size: cover;
+  background-image: url('./Containers/imgs/girish.jpg');
+  background-position: center center;
+  background-repeat: no-repeat;
+  opacity: 1.0;
+  z-index: 4.9; }
+
 
 .hero__content {
   -js-display: flex;
