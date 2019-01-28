@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../App.css';
 import { Link } from 'react-router-dom';
-import { Container1, Container2, BeforeAfterFlow, NavBar } from './Containers/Container.js';
-import './style.css';
-import './Components/Components.css';
+import '../style.css';
+import '../Components/Components.css';
 
-import Header from './Components/Horizontal/Header.js';
-import Mailing from './Components/Horizontal/Mailing.js';
-import Title from './Components/Horizontal/Title.js';
-import Video from './Components/Horizontal/Video.js';
-import Visual from './Components/Horizontal/Visual.js';
+import Header from '../Components/Horizontal/Header.js';
+import Mailing from '../Components/Horizontal/Mailing.js';
+import Title from '../Components/Horizontal/Title.js';
+import Video from '../Components/Horizontal/Video.js';
+import Visual from '../Components/Horizontal/Visual.js';
+import Interface from '../Components/Horizontal/Interface.js';
 
-import Interface from './Components/Horizontal/Interface.js';
-
-
-class Quizkly extends Component {
+class Background extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
@@ -85,13 +82,13 @@ class Quizkly extends Component {
           <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * (1)}}></div>
           <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
             <Header about={this.state.about} style={{zIndex: 5,}}/>
-            <Interface />
+            <div style={{flex: 19,}}>
+            </div>
           </div>
-
         </div>
       </div>
     );
   }
 }
 
-export default Quizkly;
+export default Background;

@@ -798,7 +798,7 @@ select {
 
 /*--- Extended and transparent version ---*/
 .navbar--extended {
-  background-color: transparent;
+  background-color: black;
   left: 0;
   width: 100vw;
 }
@@ -867,7 +867,7 @@ select {
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
-  color: #333333; }
+  color: #000000; }
   .hero__inner {
     position: relative;
     z-index: 3; }
@@ -877,21 +877,19 @@ select {
   height: 100%;
   width: 100%;
   opacity: 0.50;
-  z-index: 4.9;
-  background-color: #6C63FF; }
+  z-index: 4.9;; }
 
 .hero__overlay--gradient {
-  background: linear-gradient(to right, #6C63FF, #4641FF); }
+  background: linear-gradient(to right, red, blue); }
 
 .hero__overlay--gradientVertical {
-  background: linear-gradient(to bottom, #6C63FF, #4641FF); }
+  background: linear-gradient(to bottom, black, white); }
 
 
 .hero__mask {
   position: absolute;
   width: 100%;
   background-size: cover;
-  background-image: url('./Containers/imgs/student_life.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   opacity: 0.30;

@@ -7,15 +7,29 @@
   align-items: stretch;
 }
 
+.documents {
+  position: relative;
+  width: 100%;
+}
+
 .titleStyle {
   display: flex;
   flex: 4;
   height: 80%;
   flex-direction: column;
   justify-content: center;
-  background-color: orange;
+  background-color: #E7CCFA;
   z-index: 5;
   box-shadow: 10px 10px 5px grey;
+}
+
+.innerInterface {
+  background-color: yellow;
+}
+
+.SFFont {
+  font-family: Lato;
+
 }
 
 .overlay {
@@ -26,12 +40,37 @@
   background-color: transparent;
   overflow: hidden;
   width: 0;
+  opacity: 0;
   height: 10%;
-  transition: .5s ease;
+  transition: 1s ease;
+  width: 100%;
+}
+
+.overlay-one{
+  position: relative;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  overflow: hidden;
+  width: 100%;
+  opacity: 0;
+  height: 100%;
+  transition: 1s ease;
+  width: 100%;
+  left: 0;
+  right: 0;
+  position: relative;
 }
 
 
 .container:hover .overlay {
+
+  opacity: 1;
+  width: 100%;
+}
+.container:hover .overlay-one {
+  opacity: 1;
   width: 100%;
 }
 

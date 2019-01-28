@@ -133,14 +133,14 @@ class App extends Component {
     super(props);
     this.state = { width: 0, height: 0 };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-
+    this.handleSubmit = this.handleSubmit.bind(this);
     // binds this once constructor loads
   }
 
-  handleSubmit() {
+  handleSubmit(e) {
 
     console.log(this.state.demoValue);
-    fetch('http://127.0.0.1:8000/quizkly/', {
+    fetch('http://185.201.11.149:8080/contacts/', {
       method: 'POST',
 
       headers: {
@@ -150,7 +150,7 @@ class App extends Component {
       body: JSON.stringify({
         email: this.state.demoValue,
       }),
-    });
+    }).then(this.setState({demoValue: ""}, console.log(this.state.demoValue)));
 
   }
 
@@ -230,7 +230,7 @@ class App extends Component {
             <Video style={{zIndex: 5}}/>
             <div style={{flex: 1, }}>
             </div>
-            <Mailing style={{zIndex: 5}} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit.bind(this)}/>
+            <Mailing style={{zIndex: 5}} self={this} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit}/>
           </div>
         </div>
       </div>
