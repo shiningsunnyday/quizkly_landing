@@ -83,7 +83,7 @@ class InnerInterface extends Component {
   }
 
   loginSubmit() {
-    fetch('http://127.0.0.1:8000/user/', {
+    fetch('http://localhost:8000/user/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -102,6 +102,9 @@ class InnerInterface extends Component {
         console.log(error);
       }
     );
+    // let loginButton = document.getElementById("loginButton");
+    // console.log(loginButton);
+    // loginButton.click();
   }
 
   didClick(e) {
@@ -134,9 +137,6 @@ class InnerInterface extends Component {
     if(this.state.status == 'main') {
       content = <Main documents={this.state.documents} />
     }
-
-    // if(this.state.didLogIn){}
-    // content = <Documents documents={this.state.documents}/>
 
 
 
