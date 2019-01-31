@@ -12,11 +12,13 @@ class InnerInterface extends Component {
   constructor(props) {
     super(props);
     this.state.status = props.status;
+    this.state.index = props.index;
   }
 
 
   state = {
     status: 'login',
+    index: 0,
     didLogIn: false,
     username: "",
     password: "",
@@ -82,12 +84,15 @@ class InnerInterface extends Component {
     console.log(error, " found error");
   }
 
-  loginSubmit() {
-    fetch('http://localhost:8000/user/', {
+  signupSubmit() {
+    var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken);
+    fetch('http://localhost:8000/newuser/', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
       },
       body: JSON.stringify({
         username: this.state.username,
@@ -95,16 +100,47 @@ class InnerInterface extends Component {
       }),
     }).then(
       (response) => {
-        console.log(response.json)
+        console.log("We did it!");
+        console.log(response.json);
       }
     ).catch(
       (error) => {
-        console.log(error);
+        console.log(error)
       }
     );
-    // let loginButton = document.getElementById("loginButton");
-    // console.log(loginButton);
-    // loginButton.click();
+
+    let signupButton = document.getElementById("signupButton");
+    console.log(signupButton);
+    signupButton.click();
+  }
+
+  loginSubmit = (e) => {
+    e.preventDefault();
+    var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken);
+    fetch('http://localhost:8000/user/', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
+    }).then(
+      (response) => {
+        let loginButton = document.getElementById("loginButton");
+        console.log(loginButton);
+        loginButton.click();
+      }
+    ).catch(
+      (error) => {
+        console.log(error)
+      }
+    );
   }
 
   didClick(e) {
@@ -120,11 +156,11 @@ class InnerInterface extends Component {
   }
 
   render() {
-    console.log(this.state.status);
     let content = <LoginScreen
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
                     handleChangePassword={this.handleChangePassword.bind(this)}
                     loginSubmit={this.loginSubmit.bind(this)}
+                    signupSubmit={this.signupSubmit.bind(this)}
                     loadDocuments={this.loadDocuments.bind(this)}/>
     if(this.state.status == 'documents') {
       content = <Quizzes documents={this.state.documents}/>
@@ -137,7 +173,10 @@ class InnerInterface extends Component {
     if(this.state.status == 'main') {
       content = <Main documents={this.state.documents} />
     }
-
+    if(this.state.status == 'quiz') {
+      console.log(this.state.documents[this.state.index], " is documents at index");
+      content = <Quiz quiz={this.state.documents[this.state.index]} />
+    }
 
 
     return (

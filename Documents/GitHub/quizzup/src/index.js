@@ -7,6 +7,7 @@ import Quizkly from './Quizkly';
 import Background from './Routes/Background';
 import * as serviceWorker from './serviceWorker';
 import Interface from './Components/Horizontal/Interface';
+import Quiz from './Components/Horizontal/Interface/Quiz';
 
 // const Application = () => (
 //   <div>
@@ -38,12 +39,25 @@ const Mainpage = () => (
   </div>
 )
 
-const Quizzes = () => (
-  <div>
-    <Background />
-    <Interface status='quizzes' />
-  </div>
-)
+const QuizzesInterface = ({match}) => {
+  return(
+    <div>
+      <Background />
+      <Interface status='quizzes' index={0}/>
+    </div>
+  )
+}
+
+const QuizInterface = ({match}) => {
+  console.log(match.params.id)
+  return(
+    <div>
+      <Background />
+      <Interface status='quiz' index={match.params.id}/>
+    </div>
+  )
+}
+
 
       // <Route exact path="/app" component={Mainpage} />
 const routing = (
@@ -53,7 +67,8 @@ const routing = (
       <Route exact path="/login" component={Login} />
       <Route exact path="/app" component={Mainpage} />
       <Route exact path="/app/documents" component={Documents} />
-      <Route exact path="/app/quizzes" component={Documents} />
+      <Route exact path="/app/quizzes" component={QuizzesInterface} />
+      <Route exact path="/app/quizzes/quiz/:id" component={QuizInterface} />
       <Route exact path="/app/new" component={Documents} />
     </div>
   </Router>

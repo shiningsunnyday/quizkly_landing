@@ -3,10 +3,10 @@ import Cookies from 'js-cookie';
 
 var csrftoken = Cookies.get('csrftoken');
 
-
 const CSRFToken = () => {
+    console.log(csrftoken);
     return (
-        <input type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
+        <input id="token" type="hidden" name="csrfmiddlewaretoken" value={csrftoken} />
     );
 };
 export default CSRFToken;

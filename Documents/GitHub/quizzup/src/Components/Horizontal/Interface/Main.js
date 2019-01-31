@@ -1,35 +1,54 @@
 import React from 'react';
 import './Interface.css';
 import Document from './Document.js';
+import {Link} from 'react-router-dom';
 
 const Main = (props) => {
 
   return (
-    <div style={styles.scrollStyle}>
-      { this.state.documents.map((document, index) => {
-        return <Document index={index} text={document.text} quiz={document.quiz}
-                textEdited={props.textEdited.bind(this)} />;
-      }) }
-      { this.state.documents.map((document, index) => {
-        return <Document index={index} text={document.text} quiz={document.quiz}
-                textEdited={props.textEdited.bind(this)} />;
-      }) }
+    <div style={styles.main}>
+      <div style={styles.quizzes}>
+        <Link to="./app/quizzes">
+          <div style={styles.text}>Quizzes</div>
+        </Link>
+      </div>
+      <div style={styles.newQuiz}>
+        <Link to="./new">
+          <div style={styles.text}>New Quiz</div>
+        </Link>
+      </div>
     </div>
   );
 
 }
 
 const styles = {
-  scrollStyle: {
+  main: {
     display: 'flex',
     flexDirection: 'column',
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    top: '0%',
-    backgroundColor: 'yellow',
-    overflowY: 'scroll',
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    flex: 1,
   },
+  quizzes: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'red',
+  },
+  newQuiz: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'yellow',
+  },
+  text: {
+    flex: 1,
+    position: 'relative',
+    fontSize: '10vh',
+  }
 }
 
 export default Main;

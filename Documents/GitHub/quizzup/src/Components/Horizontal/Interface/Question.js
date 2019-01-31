@@ -23,6 +23,10 @@ const styles = {
   },
   questionStyle: {
     flex: 1,
+    backgroundColor: 'lightGreen',
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex'
   },
   answersStyle: {
     flex: 5,
@@ -30,10 +34,13 @@ const styles = {
   },
   answerChoiceStyle: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    display: 'flex',
     cursor: 'pointer',
     position: 'relative',
-    left: '10%',
-    width: '80%',
+    left: '0%',
+    width: '100%',
     backgroundColor: 'yellow'
   }
 }

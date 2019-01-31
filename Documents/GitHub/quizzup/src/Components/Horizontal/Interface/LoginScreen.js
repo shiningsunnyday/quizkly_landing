@@ -7,7 +7,7 @@ const LoginScreen = (props) => {
 
   return (
     <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', width: '30%', height: '70%', left: '35%', top: '15%', backgroundColor: 'green'}}>
-      <form onSubmit={props.loginSubmit}>
+      <form onSubmit={props.signupSubmit} method="post">
         <CSRFToken />
         <label className="loginLabel">
           <h3>Username</h3>
@@ -17,13 +17,15 @@ const LoginScreen = (props) => {
           <h3>Password</h3>
           <input name="password" type="text" value={props.value} onChange={props.handleChangePassword} />
         </label>
-        <button type="submit" className="loginButton">Hi press me</button>
+        <button type="submit" id="signupButton" className="loginButton"><Link to="/app">Signup</Link></button>
       </form>
-
     </div>
   );
 
 }
+
+// method="post"
+// <button type="submit" onSubmit={props.loginSubmit} id="loginButton" className="loginButton"><Link to="/app">Login</Link></button>
 
 export default LoginScreen;
 
