@@ -1,10 +1,12 @@
 import React, {Component } from 'react';
 import LoginScreen from './LoginScreen.js';
+import { BrowserRouter, withRouter } from 'react-router-dom';
 import Documents from './Documents.js';
 import Quiz from './Quiz.js';
 import Quizzes from './Quizzes.js';
 import QuizScreen from './QuizScreen.js';
 import Main from './Main.js';
+import New from './New.js';
 import '../../Components.css';
 
 class InnerInterface extends Component {
@@ -15,13 +17,14 @@ class InnerInterface extends Component {
     this.state.index = props.index;
   }
 
-
   state = {
-    status: 'login',
-    index: 0,
+    browser: null,
+    status: 'Login',
     didLogIn: false,
+    index: 0,
     username: "",
     password: "",
+    newCorpusValue: "",
     documents: [
       {
         title: "Obama Quiz",
@@ -68,6 +71,38 @@ class InnerInterface extends Component {
     ],
   }
 
+  handleNewCorpus(e) {
+    console.log(e, e.target.value)
+    this.setState({newCorpusValue: e.target.value})
+  }
+
+  corpusSubmit(e) {
+    console.log(this.state.newCorpusValue);
+    e.preventDefault();
+    var csrftoken = document.getElementById('token').getAttribute('value');
+    fetch('http://localhost:8000/quizkly/', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({
+        content: this.state.newCorpusValue,
+      }),
+    }).then(
+      (response) => {
+        if(response.status == 201) {
+          this.setState({
+            status: 'main',
+          })
+          this.props.history.push('../app');
+        }
+      }
+    )
+  }
+
   handleChangeUserName(e) {
     this.setState({username: e.target.value});
   }
@@ -76,49 +111,15 @@ class InnerInterface extends Component {
     this.setState({password: e.target.value});
   }
 
-  loadDocuments() {
-
-  }
-
   handleError(error) {
     console.log(error, " found error");
   }
 
-  signupSubmit() {
-    var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken);
-    fetch('http://localhost:8000/newuser/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
-      }),
-    }).then(
-      (response) => {
-        console.log("We did it!");
-        console.log(response.json);
-      }
-    ).catch(
-      (error) => {
-        console.log(error)
-      }
-    );
-
-    let signupButton = document.getElementById("signupButton");
-    console.log(signupButton);
-    signupButton.click();
-  }
-
-  loginSubmit = (e) => {
+  signupSubmit(e) {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
-    fetch('http://localhost:8000/user/', {
+    fetch('http://localhost:8000/newuser/', {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -132,9 +133,41 @@ class InnerInterface extends Component {
       }),
     }).then(
       (response) => {
-        let loginButton = document.getElementById("loginButton");
-        console.log(loginButton);
-        loginButton.click();
+        this.setState({
+          status: 'Login',
+        })
+      }
+    )
+  }
+
+  loginSubmit = (e) => {
+    e.preventDefault();
+    var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken);
+    fetch('http://localhost:8000/olduser/', {
+      credentials: 'include',
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
+    }).then(
+      (response) => {
+        if(response.status == 200) {
+          this.setState({
+            status: 'main',
+          })
+        } else if(response.status == 403) {
+          this.setState({
+            status: 'Wrong credentials, try again!',
+          })
+          BrowserRouter.push('../app');
+        }
       }
     ).catch(
       (error) => {
@@ -145,8 +178,7 @@ class InnerInterface extends Component {
 
   didClick(e) {
     console.log(e.target.getAttribute('index'));
-    console.log(this.state.correctIndex);
-    if(parseInt(e.target.getAttribute('index')) == parseInt(this.state.correctIndex)) {
+    if(parseInt(e.target.getAttribute('index')) == e.target.getAttribute('correctIndex')) {
       console.log("You're right!")
     }
   }
@@ -156,12 +188,13 @@ class InnerInterface extends Component {
   }
 
   render() {
-    let content = <LoginScreen
+    let content = <LoginScreen status={this.state.status}
+                    toSignUp={() => this.setState({status: 'Signup'})}
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
                     handleChangePassword={this.handleChangePassword.bind(this)}
                     loginSubmit={this.loginSubmit.bind(this)}
-                    signupSubmit={this.signupSubmit.bind(this)}
-                    loadDocuments={this.loadDocuments.bind(this)}/>
+                    signupSubmit={this.signupSubmit.bind(this)}/>
+
     if(this.state.status == 'documents') {
       content = <Quizzes documents={this.state.documents}/>
     }
@@ -175,7 +208,11 @@ class InnerInterface extends Component {
     }
     if(this.state.status == 'quiz') {
       console.log(this.state.documents[this.state.index], " is documents at index");
-      content = <Quiz quiz={this.state.documents[this.state.index]} />
+      content = <Quiz quiz={this.state.documents[this.state.index]} click={this.didClick.bind(this)}/>
+    }
+
+    if(this.state.status == 'new') {
+      content = <New handleNewCorpus={this.handleNewCorpus.bind(this)} corpusSubmit={this.corpusSubmit.bind(this)}/>
     }
 
 
@@ -188,4 +225,4 @@ class InnerInterface extends Component {
 
 }
 
-export default InnerInterface;
+export default withRouter(InnerInterface);

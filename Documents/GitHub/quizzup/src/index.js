@@ -8,6 +8,7 @@ import Background from './Routes/Background';
 import * as serviceWorker from './serviceWorker';
 import Interface from './Components/Horizontal/Interface';
 import Quiz from './Components/Horizontal/Interface/Quiz';
+import New from './Components/Horizontal/Interface/New';
 
 // const Application = () => (
 //   <div>
@@ -21,21 +22,21 @@ import Quiz from './Components/Horizontal/Interface/Quiz';
 const Login = () => (
   <div>
     <Background />
-    <Interface status='login' />
+    <Interface status='login' browser={routing}/>
   </div>
 )
 
 const Documents = () => (
   <div>
     <Background />
-    <Interface status='documents' />
+    <Interface status='documents' browser={routing}/>
   </div>
 )
 
 const Mainpage = () => (
   <div>
     <Background />
-    <Interface status='main' />
+    <Interface status='main' browser={routing}/>
   </div>
 )
 
@@ -43,7 +44,7 @@ const QuizzesInterface = ({match}) => {
   return(
     <div>
       <Background />
-      <Interface status='quizzes' index={0}/>
+      <Interface status='quizzes' index={0} browser={routing}/>
     </div>
   )
 }
@@ -53,7 +54,16 @@ const QuizInterface = ({match}) => {
   return(
     <div>
       <Background />
-      <Interface status='quiz' index={match.params.id}/>
+      <Interface status='quiz' index={match.params.id} browser={routing}/>
+    </div>
+  )
+}
+
+const NewInterface = ({match}) => {
+  return(
+    <div>
+      <Background />
+      <Interface status='new' browser={routing}/>
     </div>
   )
 }
@@ -69,7 +79,7 @@ const routing = (
       <Route exact path="/app/documents" component={Documents} />
       <Route exact path="/app/quizzes" component={QuizzesInterface} />
       <Route exact path="/app/quizzes/quiz/:id" component={QuizInterface} />
-      <Route exact path="/app/new" component={Documents} />
+      <Route exact path="/app/new" component={NewInterface} />
     </div>
   </Router>
 );

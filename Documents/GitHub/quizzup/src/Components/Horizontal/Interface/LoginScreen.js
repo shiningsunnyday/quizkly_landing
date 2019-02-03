@@ -4,20 +4,39 @@ import { Link } from 'react-router-dom';
 import CSRFToken from './CSRFToken.js';
 
 const LoginScreen = (props) => {
-
+  console.log(props.status);
+  if(props.status == 'Signup') {
+    return (
+      <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', width: '30%', height: '70%', left: '35%', top: '15%', backgroundColor: 'green'}}>
+        <form onSubmit={props.signupSubmit} method="post">
+          <CSRFToken />
+          <label className="loginLabel">
+            <h3>Username</h3>
+            <input name="username" style={{position: 'relative', height: '50%', top: '50%'}} type="text" onChange={props.handleChangeUserName} />
+          </label>
+          <label className="loginLabel">
+            <h3>Password</h3>
+            <input name="password" type="text" onChange={props.handleChangePassword} />
+          </label>
+          <button type="submit" className="loginButton">Signup</button>
+        </form>
+      </div>
+    );
+  }
   return (
     <div style={{display: 'flex', flexDirection: 'column', position: 'absolute', width: '30%', height: '70%', left: '35%', top: '15%', backgroundColor: 'green'}}>
-      <form onSubmit={props.signupSubmit} method="post">
+      <form onSubmit={props.loginSubmit} method="post">
         <CSRFToken />
         <label className="loginLabel">
           <h3>Username</h3>
-          <input name="username" style={{position: 'relative', height: '50%', top: '50%'}} type="text" value={props.value} onChange={props.handleChangeUserName} />
+          <input name="username" style={{position: 'relative', height: '50%', top: '50%'}} type="text" onChange={props.handleChangeUserName} />
         </label>
         <label className="loginLabel">
           <h3>Password</h3>
-          <input name="password" type="text" value={props.value} onChange={props.handleChangePassword} />
+          <input name="password" type="text" onChange={props.handleChangePassword} />
         </label>
-        <button type="submit" id="signupButton" className="loginButton"><Link to="/app">Signup</Link></button>
+        <button type="submit" className="loginButton">{props.status}</button>
+        <button onClick={props.toSignUp}>No Account? Go sign up!</button>
       </form>
     </div>
   );

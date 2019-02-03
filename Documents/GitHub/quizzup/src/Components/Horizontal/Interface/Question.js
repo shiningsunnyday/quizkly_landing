@@ -2,7 +2,6 @@ import React from 'react';
 import './Interface.css';
 
 const Question = (props) => {
-  console.log(props, " is a question");
   return (
     <div style={styles.quizStyle}>
       <div style={styles.questionStyle}>
@@ -10,7 +9,7 @@ const Question = (props) => {
       </div>
       <div style={styles.answersStyle}>
         { props.answers.map((answer, index) => {
-          return <div index={index} onClick={props.didClick} style={styles.answerChoiceStyle}>{answer}</div>
+          return <div index={index} correctIndex={props.correctIndex} onClick={props.click} style={styles.answerChoiceStyle}>{answer}</div>
         })}
       </div>
     </div>
@@ -40,6 +39,7 @@ const styles = {
     cursor: 'pointer',
     position: 'relative',
     left: '0%',
+    height: '20px',
     width: '100%',
     backgroundColor: 'yellow'
   }

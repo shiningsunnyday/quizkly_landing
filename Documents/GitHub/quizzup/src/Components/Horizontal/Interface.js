@@ -3,7 +3,7 @@ import InnerInterface from './Interface/InnerInterface.js'
 
 const Interface = (props) => {
 
-  console.log(props.index, " is index");
+  console.log(props.ind, " is index");
   return (
     <div style={{flex: 19, backgroundColor: 'black'}}>
       {props.index}

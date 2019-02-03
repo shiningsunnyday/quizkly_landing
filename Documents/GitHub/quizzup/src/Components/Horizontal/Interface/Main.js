@@ -13,7 +13,7 @@ const Main = (props) => {
         </Link>
       </div>
       <div style={styles.newQuiz}>
-        <Link to="./new">
+        <Link to="./app/new">
           <div style={styles.text}>New Quiz</div>
         </Link>
       </div>
