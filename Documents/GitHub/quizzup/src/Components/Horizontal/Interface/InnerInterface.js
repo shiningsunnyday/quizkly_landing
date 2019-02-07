@@ -3,6 +3,7 @@ import LoginScreen from './LoginScreen.js';
 import { BrowserRouter, withRouter } from 'react-router-dom';
 import Documents from './Documents.js';
 import Quiz from './Quiz.js';
+import Flashcards from './Flashcards.js';
 import Quizzes from './Quizzes.js';
 import QuizScreen from './QuizScreen.js';
 import Main from './Main.js';
@@ -80,6 +81,8 @@ class InnerInterface extends Component {
     console.log(this.state.newCorpusValue);
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken);
+    console.log(csrftoken);
     fetch('http://localhost:8000/quizkly/', {
       credentials: 'include',
       method: 'POST',
@@ -97,7 +100,6 @@ class InnerInterface extends Component {
           this.setState({
             status: 'main',
           })
-          this.props.history.push('../app');
         }
       }
     )
@@ -113,6 +115,10 @@ class InnerInterface extends Component {
 
   handleError(error) {
     console.log(error, " found error");
+  }
+
+  toFlashcards(e) {
+    this.setState({status: 'flashcards'});
   }
 
   signupSubmit(e) {
@@ -166,7 +172,6 @@ class InnerInterface extends Component {
           this.setState({
             status: 'Wrong credentials, try again!',
           })
-          BrowserRouter.push('../app');
         }
       }
     ).catch(
@@ -208,7 +213,12 @@ class InnerInterface extends Component {
     }
     if(this.state.status == 'quiz') {
       console.log(this.state.documents[this.state.index], " is documents at index");
-      content = <Quiz quiz={this.state.documents[this.state.index]} click={this.didClick.bind(this)}/>
+      content = <Quiz quiz={this.state.documents[this.state.index]} toFlashcards={this.toFlashcards.bind(this)} click={this.didClick.bind(this)}/>
+    }
+
+    if(this.state.status == 'flashcards') {
+      let quiz = this.state.documents[this.state.index];
+      content = <Flashcards quiz={quiz} />
     }
 
     if(this.state.status == 'new') {

@@ -6,6 +6,10 @@ const Quiz = (props) => {
 
   return (
     <div className="quiz">
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+        <div onClick={props.toFlashcards} style={styles.toFlashcards}>Test myself with this</div>
+        <div style={styles.toFlashcards}>Save after edit</div>
+      </div>
       {props.quiz.quiz.map((question, index) => {
         return <Question className="question" question={question.question}
                   answers={question.answers}
@@ -15,6 +19,20 @@ const Quiz = (props) => {
     </div>
   )
 
+}
+
+const styles = {
+  toFlashcards: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'relative',
+    fontFamily: 'Lato',
+    fontSize: '2.5vh',
+    height: '5%',
+    width: '100%',
+    top: '0',
+  }
 }
 
 

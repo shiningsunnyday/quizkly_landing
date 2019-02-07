@@ -8,14 +8,14 @@ const Main = (props) => {
   return (
     <div style={styles.main}>
       <div style={styles.quizzes}>
-        <Link to="./app/quizzes">
-          <div style={styles.text}>Quizzes</div>
-        </Link>
+      <div style={styles.text}>
+        <Link style={styles.link} to="./app/quizzes">Quizzes</Link>
+      </div>
       </div>
       <div style={styles.newQuiz}>
-        <Link to="./app/new">
-          <div style={styles.text}>New Quiz</div>
-        </Link>
+        <div style={styles.text}>
+          <Link style={styles.link} to="./app/new">New Quiz</Link>
+        </div>
       </div>
     </div>
   );
@@ -23,6 +23,11 @@ const Main = (props) => {
 }
 
 const styles = {
+  link: {
+    color: 'black',
+    display: 'flex',
+    justifyContent: 'center'
+  },
   main: {
     display: 'flex',
     flexDirection: 'column',
@@ -46,6 +51,7 @@ const styles = {
   },
   text: {
     flex: 1,
+    color: 'black',
     position: 'relative',
     fontSize: '10vh',
   }

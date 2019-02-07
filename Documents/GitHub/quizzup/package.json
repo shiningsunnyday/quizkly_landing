@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "install": "^0.12.2",
     "js-cookie": "^2.2.0",
+    "npm": "^6.7.0",
+    "primeicons": "^1.0.0",
+    "primereact": "^3.0.0",
     "react": "^16.6.3",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.6.3",
