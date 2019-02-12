@@ -2,8 +2,8 @@ import React from 'react';
 import './Interface.css';
 import Quiz from './Quiz.js';
 
+
 const Quizzes = (props) => {
-  console.log(props.documents, " are documents");
   return (
     <div style={styles.quizzes}>
       {props.documents.map((document, index) => {

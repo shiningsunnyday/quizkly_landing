@@ -25,6 +25,8 @@ class InnerInterface extends Component {
     index: 0,
     username: "",
     password: "",
+    contact: "",
+    newCorpusName: "",
     newCorpusValue: "",
     documents: [
       {
@@ -77,13 +79,21 @@ class InnerInterface extends Component {
     this.setState({newCorpusValue: e.target.value})
   }
 
+  handleNewCorpusName(e) {
+    console.log(e, e.target.value)
+    this.setState({newCorpusName: e.target.value})
+  }
+
+
   corpusSubmit(e) {
     console.log(this.state.newCorpusValue);
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken);
-    console.log(csrftoken);
-    fetch('http://localhost:8000/quizkly/', {
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken, " token");
+    console.log(this.state.newCorpusValue);
+    fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -92,6 +102,7 @@ class InnerInterface extends Component {
         'X-CSRFToken': csrftoken
       },
       body: JSON.stringify({
+        name: this.state.newCorpusName,
         content: this.state.newCorpusValue,
       }),
     }).then(
@@ -113,6 +124,10 @@ class InnerInterface extends Component {
     this.setState({password: e.target.value});
   }
 
+  handleChangeContact(e) {
+    this.setState({contact: e.target.value});
+  }
+
   handleError(error) {
     console.log(error, " found error");
   }
@@ -125,7 +140,8 @@ class InnerInterface extends Component {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
-    fetch('http://localhost:8000/newuser/', {
+    console.log(csrftoken, " about to submit token");
+    fetch('http://localhost:8000/signup/', {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -136,6 +152,7 @@ class InnerInterface extends Component {
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
+        email: this.state.contact,
       }),
     }).then(
       (response) => {
@@ -150,7 +167,8 @@ class InnerInterface extends Component {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
-    fetch('http://localhost:8000/olduser/', {
+    console.log(csrftoken, " about to submit token");
+    fetch('http://localhost:8000/login/', {
       credentials: 'include',
       method: 'POST',
       headers: {
@@ -161,6 +179,7 @@ class InnerInterface extends Component {
       body: JSON.stringify({
         username: this.state.username,
         password: this.state.password,
+        email: this.state.contact,
       }),
     }).then(
       (response) => {
@@ -192,11 +211,37 @@ class InnerInterface extends Component {
     console.log(e.target.getAttribute('index'));
   }
 
+  async getQuizzes() {
+    var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken);
+    console.log(csrftoken, " about to submit token");
+    fetch('http://localhost:8000/quizzes/', {
+      credentials: 'include',
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'X-CSRFToken': csrftoken
+      },
+      body: JSON.stringify({
+      }),
+    }).then(
+      (response) => {
+        console.log(response)
+      }
+    ).catch(
+      (error) => {
+        console.log(error)
+      }
+    );
+  }
+
   render() {
     let content = <LoginScreen status={this.state.status}
                     toSignUp={() => this.setState({status: 'Signup'})}
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
                     handleChangePassword={this.handleChangePassword.bind(this)}
+                    handleChangeContact={this.handleChangeContact.bind(this)}
                     loginSubmit={this.loginSubmit.bind(this)}
                     signupSubmit={this.signupSubmit.bind(this)}/>
 
@@ -222,12 +267,12 @@ class InnerInterface extends Component {
     }
 
     if(this.state.status == 'new') {
-      content = <New handleNewCorpus={this.handleNewCorpus.bind(this)} corpusSubmit={this.corpusSubmit.bind(this)}/>
+      content = <New handleNewCorpusName={this.handleNewCorpusName.bind(this)} handleNewCorpus={this.handleNewCorpus.bind(this)} corpusSubmit={this.corpusSubmit.bind(this)}/>
     }
 
 
     return (
-      <div style={{position: 'absolute', left: '5%', top: '15%', width: '90%', height: '80%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', backgroundColor: 'white'}}>
+      <div style={{position: 'absolute', left: '5%', top: '15%', width: '90%', height: '80%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', backgroundColor: 'yellow'}}>
         {content}
       </div>
     );

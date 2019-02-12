@@ -7,10 +7,14 @@ const New = (props) => {
 
   return (
     <div style={styles.new}>
-      <div style={styles.instructions}>Enter your corpus here!</div>
       <form style={styles.form} onSubmit={props.corpusSubmit} method="post">
         <CSRFToken />
-        <label style={styles.label}>
+        <div style={styles.instructions}>Enter the name of your quiz here</div>
+        <label style={styles.nameInput}>
+          <input name="name" style={styles.textarea} value={props.newCorpusName} onChange={props.handleNewCorpusName} />
+        </label>
+        <div style={styles.instructions}>Enter the content of your corpus</div>
+        <label style={styles.corpusInput}>
           <textarea name="corpus" style={styles.textarea} value={props.newCorpusValue} onChange={props.handleNewCorpus} />
         </label>
         <button style={styles.submitButton} type="submit">Submit</button>
@@ -39,12 +43,20 @@ const styles = {
   },
   instructions: {
     flex: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
   },
-  label: {
-    height: '80%',
-    width: '100%',
-    backgroundColor: 'blue',
+  nameInput: {
+    flex: 1,
     position: 'relative',
+    backgroundColor: 'black',
+  },
+  corpusInput: {
+    flex: 10,
+    position: 'relative',
+    backgroundColor: 'black',
+    padding: 0,
   },
   textarea: {
     position: 'relative',

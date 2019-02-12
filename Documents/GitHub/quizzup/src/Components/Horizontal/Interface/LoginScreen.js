@@ -18,6 +18,10 @@ const LoginScreen = (props) => {
             <h3>Password</h3>
             <input name="password" type="text" onChange={props.handleChangePassword} />
           </label>
+          <label className="loginLabel">
+            <h3>Contact</h3>
+            <input name="contact" type="text" onChange={props.handleChangeContact} />
+          </label>
           <button type="submit" className="loginButton">Signup</button>
         </form>
       </div>
@@ -34,6 +38,10 @@ const LoginScreen = (props) => {
         <label className="loginLabel">
           <h3>Password</h3>
           <input name="password" type="text" onChange={props.handleChangePassword} />
+        </label>
+        <label className="loginLabel">
+          <h3>Contact</h3>
+          <input name="contact" type="text" onChange={props.handleChangeContact} />
         </label>
         <button type="submit" className="loginButton">{props.status}</button>
         <button onClick={props.toSignUp}>No Account? Go sign up!</button>
