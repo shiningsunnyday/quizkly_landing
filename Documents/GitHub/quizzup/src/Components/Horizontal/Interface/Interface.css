@@ -19,6 +19,13 @@
 
 .question {
   background-color: blue;
+  overflow-y: scroll;
+}
+
+.quiz-questions {
+  flex: 15;
+  overflow-y: scroll;
+  flex-direction: column;
 }
 
 .quiz {

@@ -2,7 +2,6 @@ import React from 'react';
 import './Interface.css';
 import Quiz from './Quiz.js';
 
-
 const Quizzes = (props) => {
   return (
     <div style={styles.quizzes}>
@@ -18,6 +17,7 @@ const styles = {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
+    overflowY: 'scroll'
   }
 }
 

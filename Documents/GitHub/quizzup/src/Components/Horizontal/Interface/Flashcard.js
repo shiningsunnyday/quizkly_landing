@@ -10,7 +10,7 @@ const Flashcard = (props) => {
   console.log(question, "question choices", choices);
   return (
     <div style={styles.flashcard}>
-      <Card title="Advanced Card" subTitle="Subtitle" style={styles.card} className="ui-card-shadow">
+      <Card style={styles.card} className="ui-card-shadow">
         <div>{question}</div>
         <div style={styles.choices}>
           {choices.map((choice, index) => {

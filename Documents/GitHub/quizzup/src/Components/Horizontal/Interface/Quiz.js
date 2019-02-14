@@ -6,16 +6,18 @@ const Quiz = (props) => {
 
   return (
     <div className="quiz">
-      <div style={{display: 'flex', flexDirection: 'row'}}>
+      <div style={{flex: 1, display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
         <div onClick={props.toFlashcards} style={styles.toFlashcards}>Test myself with this</div>
         <div style={styles.toFlashcards}>Save after edit</div>
       </div>
-      {props.quiz.quiz.map((question, index) => {
-        return <Question className="question" question={question.question}
-                  answers={question.answers}
-                  correctIndex={question.correctIndex}
-                  click={props.click} />
-      })}
+      <div className="quiz-questions">
+        {props.quiz.quiz.map((question, index) => {
+          return <Question className="question" question={question.question}
+                    answers={question.answers}
+                    correctIndex={question.correctIndex}
+                    click={props.click} />
+        })}
+      </div>
     </div>
   )
 

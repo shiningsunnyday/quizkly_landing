@@ -8,7 +8,10 @@ const QuizScreen = (props) => {
   return (
     props.titles.map((title, index) => {
       return <div style={styles.title}>
-        <Link to={`./quizzes/quiz/${index}`}>
+        <Link to={{
+          pathname: `./quizzes/quiz/${index}`,
+          state: {state: props.state},
+        }}>
           <div style={{fontSize: '5vh'}}>{title}</div>
         </Link>
         </div>;

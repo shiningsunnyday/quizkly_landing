@@ -5,9 +5,7 @@ import {Link} from 'react-router-dom';
 
 const retrieveQuizzes = async () => {
   var csrftoken = await document.getElementById('token').getAttribute('value');
-  var quizzes = {};
-  var docs = [];
-  fetch('http://localhost:8000/questions/', {
+  return fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
       method: 'GET',
       headers: {
@@ -18,56 +16,42 @@ const retrieveQuizzes = async () => {
     }).then(function(response) {
       return response.json();
     }).then(function(data) {
-      console.log(data)
-      for(var i = 0; i < data.length; i++) {
-        if(quizzes[data[i].quiz]) {quizzes[data[i].quiz].push(data[i].question);}
-        else {quizzes[data[i].quiz] = [data[i].question]}
-      }
-      console.log(quizzes , "is the move");
-      return fetch('http://localhost:8000/quizzes/', {
-          credentials: 'include',
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
-          }
+      return data.map((corpus) => {
+        return ({
+          title: corpus.quiz.name,
+          text: corpus.content,
+          quiz: corpus.quiz.question_set.map((question) => {
+            return ({
+              question: question.question,
+              answers: question.distractor_set.map((distractor) => {
+                return distractor.text
+              }),
+              correctIndex: question.correct,
+            })
+          })
+        })
       })
-    }).then(function(response) {
-      return response.json();
-    }).then(function(qres) {
-      console.log(qres);
-      for(var j = 0; j < qres.length; j++) {
-        docs.push({"name": qres[j].name, "text": qres[j].corpus, "questions": quizzes[qres[j].id]});
-      }
-      console.log(docs);
-      return fetch('http://localhost:8000/corpuses/', {
-          credentials: 'include',
-          method: 'GET',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'X-CSRFToken': csrftoken
-          }
-      })
-    }).then(function(response) {
-      return response.json();
-    }).then(function(cres) {
-      console.log(cres);
     })
 }
 
 const Main = (props) => {
-  retrieveQuizzes().then(
-    (res) => {
-      console.log(res);
-    }
-  );
+  console.log(props.state.needRetrieve);
+  if(props.state.needRetrieve) {
+    retrieveQuizzes().then(
+      (res) => {
+        console.log("Res", res)
+        props.updateMain(res);
+      }
+    )
+  }
   return (
     <div style={styles.main}>
       <div style={styles.quizzes}>
       <div style={styles.text}>
-        <Link style={styles.link} to="./app/quizzes">Quizzes</Link>
+        <Link style={styles.link} to={{
+          pathname: "./app/quizzes",
+          state: { state: props.state},
+        }}>Quizzes</Link>
       </div>
       </div>
       <div style={styles.newQuiz}>

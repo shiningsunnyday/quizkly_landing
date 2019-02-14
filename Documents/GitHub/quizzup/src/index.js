@@ -43,21 +43,22 @@ const Mainpage = () => (
   </div>
 )
 
-const QuizzesInterface = ({match}) => {
+const QuizzesInterface = ({location}) => {
   return(
     <div>
       <Background />
-      <Interface status='quizzes' index={0} browser={routing}/>
+      <Interface status='quizzes' index={0} state={location.state} status="quizzes" browser={routing}/>
     </div>
   )
 }
 
-const QuizInterface = ({match}) => {
+const QuizInterface = ({match, location}) => {
   console.log(match.params.id)
+  console.log(location)
   return(
     <div>
       <Background />
-      <Interface status='quiz' index={match.params.id} browser={routing}/>
+      <Interface status='quiz' state={location.state} index={match.params.id} browser={routing}/>
     </div>
   )
 }

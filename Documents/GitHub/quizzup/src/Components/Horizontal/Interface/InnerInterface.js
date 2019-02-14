@@ -14,12 +14,19 @@ class InnerInterface extends Component {
 
   constructor(props) {
     super(props);
+    console.log(props.status);
+    if(typeof props.state !== 'undefined') {
+      this.state = props.state;
+      console.log(props.state);
+      console.log("this.state", this.state);
+    }
     this.state.status = props.status;
     this.state.index = props.index;
   }
 
   state = {
     browser: null,
+    needRetrieve: true,
     status: 'Login',
     didLogIn: false,
     index: 0,
@@ -89,9 +96,7 @@ class InnerInterface extends Component {
     console.log(this.state.newCorpusValue);
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken, " token");
+    console.log(csrftoken, " token submit lol");
     console.log(this.state.newCorpusValue);
     fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
@@ -114,6 +119,11 @@ class InnerInterface extends Component {
         }
       }
     )
+  }
+
+  updateMain(value) {
+    console.log("Update main value", value);
+    this.setState({documents: value, needRetrieve: false,})
   }
 
   handleChangeUserName(e) {
@@ -139,8 +149,19 @@ class InnerInterface extends Component {
   signupSubmit(e) {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
+    console.log(csrftoken, " token submit");
+    console.log(csrftoken, " token submit");
+    console.log(csrftoken, " token submit");
+    console.log(csrftoken, " token submit");
     console.log(csrftoken);
     console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
+    console.log(csrftoken);
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
+    console.log(csrftoken);
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
     fetch('http://localhost:8000/signup/', {
       credentials: 'include',
       method: 'POST',
@@ -163,11 +184,18 @@ class InnerInterface extends Component {
     )
   }
 
-  loginSubmit = (e) => {
+  loginSubmit(e) {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
     console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
+    console.log(csrftoken);
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
+    console.log(csrftoken);
+    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken);
     fetch('http://localhost:8000/login/', {
       credentials: 'include',
       method: 'POST',
@@ -211,7 +239,7 @@ class InnerInterface extends Component {
     console.log(e.target.getAttribute('index'));
   }
 
-  async getQuizzes() {
+  getQuizzes() {
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
     console.log(csrftoken, " about to submit token");
@@ -249,12 +277,15 @@ class InnerInterface extends Component {
       content = <Quizzes documents={this.state.documents}/>
     }
     if(this.state.status == 'quizzes') {
-      content = <QuizScreen editQuiz={this.editQuiz.bind(this)} titles={this.state.documents.map((document) => {
+      console.log(this.state)
+      content = <QuizScreen editQuiz={this.editQuiz.bind(this)} state={this.state} titles={this.state.documents.map((document) => {
         return document.title;
       })} />
     }
     if(this.state.status == 'main') {
-      content = <Main documents={this.state.documents} />
+      console.log("Documents", this.state.documents)
+      console.log(this.state)
+      content = <Main updateMain={this.updateMain.bind(this)} state={this.state}/>
     }
     if(this.state.status == 'quiz') {
       console.log(this.state.documents[this.state.index], " is documents at index");
@@ -272,7 +303,7 @@ class InnerInterface extends Component {
 
 
     return (
-      <div style={{position: 'absolute', left: '5%', top: '15%', width: '90%', height: '80%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', backgroundColor: 'yellow'}}>
+      <div style={{position: 'absolute', left: '5%', top: '15%', width: '90%', height: '80%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', overflowY: 'scroll', backgroundColor: 'yellow'}}>
         {content}
       </div>
     );

@@ -18,7 +18,7 @@ const Question = (props) => {
 
 const styles = {
   quizStyle: {
-    flex: 1, display: 'flex', flexDirection: 'column',
+    flex: 1, display: 'flex', flexDirection: 'column', height: '25vh',
   },
   questionStyle: {
     flex: 1,
@@ -28,18 +28,20 @@ const styles = {
     display: 'flex'
   },
   answersStyle: {
-    flex: 5,
+    flex: 3,
     backgroundColor: 'white',
+    overflowY: 'scroll',
+    flexDirection: 'column',
+    display: 'flex',
   },
   answerChoiceStyle: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
     cursor: 'pointer',
     position: 'relative',
+    flex: 1,
     left: '0%',
-    height: '20px',
     width: '100%',
     backgroundColor: 'yellow'
   }
