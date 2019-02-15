@@ -1,6 +1,6 @@
 import React, {Component } from 'react';
 import LoginScreen from './LoginScreen.js';
-import { BrowserRouter, withRouter } from 'react-router-dom';
+import { BrowserRouter, withRouter, Link } from 'react-router-dom';
 import Documents from './Documents.js';
 import Quiz from './Quiz.js';
 import Flashcards from './Flashcards.js';
@@ -9,6 +9,7 @@ import QuizScreen from './QuizScreen.js';
 import Main from './Main.js';
 import New from './New.js';
 import '../../Components.css';
+import { Button } from 'primereact/button';
 
 class InnerInterface extends Component {
 
@@ -24,8 +25,10 @@ class InnerInterface extends Component {
     this.state.index = props.index;
   }
 
+
   state = {
     browser: null,
+    loading: false,
     needRetrieve: true,
     status: 'Login',
     didLogIn: false,
@@ -95,9 +98,11 @@ class InnerInterface extends Component {
   corpusSubmit(e) {
     console.log(this.state.newCorpusValue);
     e.preventDefault();
+    this.setState({loading: true})
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken, " token submit lol");
     console.log(this.state.newCorpusValue);
+    console.log("Generating corpus now")
     fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
       method: 'POST',
@@ -112,6 +117,8 @@ class InnerInterface extends Component {
       }),
     }).then(
       (response) => {
+        console.log("Okie done")
+        this.setState({loading: false,})
         if(response.status == 201) {
           this.setState({
             status: 'main',
@@ -121,9 +128,13 @@ class InnerInterface extends Component {
     )
   }
 
-  updateMain(value) {
-    console.log("Update main value", value);
-    this.setState({documents: value, needRetrieve: false,})
+  updateMain(bool, value) {
+    console.log("Update main", bool)
+    if(bool) {
+      this.setState({documents: value, needRetrieve: false,})
+    } else {
+      this.setState({status: 'error', needRetrieve: false})
+    }
   }
 
   handleChangeUserName(e) {
@@ -214,6 +225,7 @@ class InnerInterface extends Component {
         if(response.status == 200) {
           this.setState({
             status: 'main',
+            didLogIn: true,
           })
         } else if(response.status == 403) {
           this.setState({
@@ -233,6 +245,24 @@ class InnerInterface extends Component {
     if(parseInt(e.target.getAttribute('index')) == e.target.getAttribute('correctIndex')) {
       console.log("You're right!")
     }
+  }
+
+  backTrack() {
+    var newStatus = "main";
+    switch(this.state.status) {
+      case 'flashcards':
+        newStatus = 'quiz';
+        break;
+      case 'quiz':
+        newStatus = 'quizzes';
+        break;
+      case 'new':
+        newStatus = 'main';
+        break;
+      default:
+        break;
+    }
+    this.setState({status: newStatus})
   }
 
   editQuiz(e) {
@@ -265,6 +295,8 @@ class InnerInterface extends Component {
   }
 
   render() {
+    console.log("Current status ", this.state.status)
+    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quiz", "new": ""}
     let content = <LoginScreen status={this.state.status}
                     toSignUp={() => this.setState({status: 'Signup'})}
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
@@ -282,7 +314,7 @@ class InnerInterface extends Component {
         return document.title;
       })} />
     }
-    if(this.state.status == 'main') {
+    if(this.state.status == 'main' || this.state.status == 'error') {
       console.log("Documents", this.state.documents)
       console.log(this.state)
       content = <Main updateMain={this.updateMain.bind(this)} state={this.state}/>
@@ -298,17 +330,99 @@ class InnerInterface extends Component {
     }
 
     if(this.state.status == 'new') {
-      content = <New handleNewCorpusName={this.handleNewCorpusName.bind(this)} handleNewCorpus={this.handleNewCorpus.bind(this)} corpusSubmit={this.corpusSubmit.bind(this)}/>
+      console.log("is loading ", this.state.loading)
+      content = <New handleNewCorpusName={this.handleNewCorpusName.bind(this)}
+        handleNewCorpus={this.handleNewCorpus.bind(this)}
+        corpusSubmit={this.corpusSubmit.bind(this)}
+        loading={this.state.loading}/>
+    }
+
+    if(this.state.status === 'error') {
+      return (
+        <div>
+          <div style={styles.errorMessage}>
+            You have not logged in. Placeholder quizzes will be shown.
+          </div>
+          <div style={styles.content}>
+            {content}
+          </div>
+        </div>
+      )
     }
 
 
+    if(this.state.status === 'main' || this.state.status === 'login' || this.state.status === 'Login') {
+      return (
+        <div style={styles.content}>
+          {content}
+        </div>
+      )
+    }
+
     return (
-      <div style={{position: 'absolute', left: '5%', top: '15%', width: '90%', height: '80%', display: 'flex', flexDirection: 'column', alignItems: 'stretch', overflowY: 'scroll', backgroundColor: 'yellow'}}>
-        {content}
+      <div>
+        <div style={styles.backButton}>
+          <Link style={styles.navButton} to={{
+            pathname: `/app/${backMapper[this.state.status]}`,
+            state: { state: this.state }
+          }}>
+            <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
+          </Link>
+        </div>
+        <div style={styles.content}>
+          {content}
+        </div>
       </div>
     );
   }
 
+}
+
+// <Link style={styles.navButton} to={{
+//   pathname: `/app/${backMapper[this.state.status]}`,
+//   state: { state: this.state},
+// }}>
+
+const styles = {
+  content: {
+    position: 'absolute',
+    left: '5%',
+    top: '15%',
+    width: '90%',
+    height: '80%',
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    overflowY: 'scroll',
+    backgroundColor: 'yellow'
+  },
+  backButton: {
+    position: 'absolute',
+    left: '0%',
+    top: '52.5%',
+    width: '5%',
+    height: '5%',
+  },
+  errorMessage: {
+    position: 'absolute',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '2.5vh',
+    fontFamily: 'Lato',
+    backgroundColor: 'transparent',
+    width: '100%',
+    top: '10%',
+    height: '5%',
+  },
+  navButton: {
+    position: 'relative',
+    height: '80%',
+    top: '10%',
+    width: '80%',
+    left: '10%',
+    backgroundColor: 'transparent',
+  },
 }
 
 export default withRouter(InnerInterface);

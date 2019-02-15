@@ -3,8 +3,9 @@ import InnerInterface from './Interface/InnerInterface.js'
 
 const Interface = (props) => {
   if(typeof props.state !== 'undefined') {
+    console.log(props.status)
     var tempState = props.state.state
-    tempState.status = props.state.status
+    tempState.status = props.status
     return (
       <div style={{flex: 19, backgroundColor: 'black'}}>
         {props.index}

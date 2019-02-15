@@ -36,18 +36,27 @@ const Documents = () => (
   </div>
 )
 
-const Mainpage = () => (
+const Mainpage = ({location}) => {
+  sta = "error"
+  console.log(location.state)
+  if(typeof location.state !== 'undefined' && location.state.state.didLogIn) {
+    var sta = "main"
+  } else {
+    var sta = "error"
+  }
+  return (
   <div>
     <Background />
-    <Interface status='main' browser={routing}/>
+    <Interface status={sta} state={location.state} browser={routing}/>
   </div>
-)
+  )
+}
 
 const QuizzesInterface = ({location}) => {
   return(
     <div>
       <Background />
-      <Interface status='quizzes' index={0} state={location.state} status="quizzes" browser={routing}/>
+      <Interface index={0} state={location.state} status="quizzes" browser={routing}/>
     </div>
   )
 }
@@ -63,11 +72,12 @@ const QuizInterface = ({match, location}) => {
   )
 }
 
-const NewInterface = ({match}) => {
+const NewInterface = ({location}) => {
+  console.log(location.state)
   return(
     <div>
       <Background />
-      <Interface status='new' browser={routing}/>
+      <Interface status='new' state={location.state} browser={routing}/>
     </div>
   )
 }
@@ -80,6 +90,7 @@ const routing = (
       <Route exact path="/" component={App} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/app" component={Mainpage} />
+      <Route exact path="/app/" component={Mainpage} />
       <Route exact path="/app/documents" component={Documents} />
       <Route exact path="/app/quizzes" component={QuizzesInterface} />
       <Route exact path="/app/quizzes/quiz/:id" component={QuizInterface} />

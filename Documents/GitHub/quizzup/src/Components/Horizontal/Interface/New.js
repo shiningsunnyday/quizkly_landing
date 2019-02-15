@@ -2,9 +2,19 @@ import React, { Component } from 'react';
 import Question from './Question.js';
 import './Interface.css';
 import CSRFToken from './CSRFToken.js';
+import { css } from '@emotion/core';
+import { PacmanLoader } from 'react-spinners';
+
+const override = `css
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+    flex: 1;
+    border-color: red;
+`;
 
 const New = (props) => {
-
+  console.log(props.loading)
   return (
     <div style={styles.new}>
       <form style={styles.form} onSubmit={props.corpusSubmit} method="post">
@@ -14,9 +24,18 @@ const New = (props) => {
           <input name="name" style={styles.textarea} value={props.newCorpusName} onChange={props.handleNewCorpusName} />
         </label>
         <div style={styles.instructions}>Enter the content of your corpus</div>
-        <label style={styles.corpusInput}>
-          <textarea name="corpus" style={styles.textarea} value={props.newCorpusValue} onChange={props.handleNewCorpus} />
-        </label>
+        <div style={styles.corpusAndLoader}>
+          <PacmanLoader
+            css={override}
+            sizeUnit={'px'}
+            size={100}
+            color={'#123abc'}
+            loading={props.loading}
+          />
+          <label style={styles.corpusInput}>
+            <textarea name="corpus" style={styles.textarea} value={props.newCorpusValue} onChange={props.handleNewCorpus} />
+          </label>
+        </div>
         <button style={styles.submitButton} type="submit">Submit</button>
       </form>
     </div>
@@ -52,11 +71,21 @@ const styles = {
     position: 'relative',
     backgroundColor: 'black',
   },
-  corpusInput: {
+  corpusAndLoader: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
     flex: 10,
-    position: 'relative',
-    backgroundColor: 'black',
     padding: 0,
+  },
+  corpusInput: {
+    padding: 0,
+    position: 'relative',
+    height: '100%',
+    width: '100%',
+    flex: 1,
+    backgroundColor: 'black'
   },
   textarea: {
     position: 'relative',
