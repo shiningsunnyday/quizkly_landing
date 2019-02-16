@@ -140,9 +140,8 @@ class App extends Component {
   handleSubmit(e) {
 
     console.log(this.state.demoValue);
-    fetch('http://185.201.11.149:8080/contacts/', {
+    fetch('http://shiningsunnyday.pythonanywhere.com/contacts/', {
       method: 'POST',
-
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
