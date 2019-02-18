@@ -28,6 +28,11 @@
   flex-direction: column;
 }
 
+.innerInterface {
+  box-shadow: -10px -10px 10px grey;
+  background-color: blue;
+}
+
 .quiz {
   display: flex;
   flex-direction: column;

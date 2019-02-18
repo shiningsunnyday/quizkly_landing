@@ -53,12 +53,12 @@ const Main = (props) => {
   return (
     <div style={styles.main}>
       <div style={styles.quizzes}>
-      <div style={styles.text}>
-        <Link style={styles.link} to={{
-          pathname: "/app/quizzes",
-          state: { state: props.state},
-        }}>Quizzes</Link>
-      </div>
+        <div style={styles.text}>
+          <Link style={styles.link} to={{
+            pathname: "/app/quizzes",
+            state: { state: props.state},
+          }}>Quizzes</Link>
+        </div>
       </div>
       <div style={styles.newQuiz}>
         <div style={styles.text}>
@@ -85,6 +85,9 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'stretch',
     flex: 1,
+    position: 'relative',
+    width: '100%',
+    height: '100%'
   },
   quizzes: {
     flex: 1,

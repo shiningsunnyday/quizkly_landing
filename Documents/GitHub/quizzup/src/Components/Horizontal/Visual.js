@@ -12,8 +12,8 @@ const Visual = () => {
       </div>
       <div className="container" style={{backgroundColor: 'transparent'}}>
         <img style={{position: "absolute", left: '10%', right: '5%', top: '45%', width: '85%', height: '10%', }} src={require('../../Containers/imgs/arrow.png')} alt="..." />
-        <div className="overlay" style={{height: '100%'}}>
-          <div className="text" style={{whiteSpace: 'nowrap', fontSize: '3vh', fontFamily: 'Lato'}}>Quizkly</div>
+        <div className="overlay" style={{height: '95%'}}>
+          <div className="text" style={{whiteSpace: 'nowrap', fontSize: '5vh', fontFamily: 'Lato'}}>Quizkly</div>
         </div>
       </div>
       <div className="container" style={{flex: 6, backgroundColor: 'transparent'}}>

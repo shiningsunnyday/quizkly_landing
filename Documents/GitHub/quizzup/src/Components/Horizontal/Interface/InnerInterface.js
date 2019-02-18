@@ -101,6 +101,10 @@ class InnerInterface extends Component {
     this.setState({loading: true})
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken, " token submit lol");
+    console.log(csrftoken, " token submit lol");
+    console.log(csrftoken, " token submit lol");
+    console.log(csrftoken, " token submit lol");
+    console.log(csrftoken, " token submit lol");
     console.log(this.state.newCorpusValue);
     console.log("Generating corpus now")
     fetch('http://localhost:8000/corpuses/', {
@@ -122,6 +126,7 @@ class InnerInterface extends Component {
         if(response.status == 201) {
           this.setState({
             status: 'main',
+            newCorpusName: "",
           })
         }
       }
@@ -350,7 +355,6 @@ class InnerInterface extends Component {
       )
     }
 
-
     if(this.state.status === 'main' || this.state.status === 'login' || this.state.status === 'Login') {
       return (
         <div style={styles.content}>
@@ -360,7 +364,7 @@ class InnerInterface extends Component {
     }
 
     return (
-      <div>
+      <div className="innerInterface">
         <div style={styles.backButton}>
           <Link style={styles.navButton} to={{
             pathname: `/app/${backMapper[this.state.status]}`,
@@ -390,17 +394,18 @@ const styles = {
     top: '15%',
     width: '90%',
     height: '80%',
-    display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
     overflowY: 'scroll',
-    backgroundColor: 'yellow'
+    backgroundColor: 'yellow',
+    boxShadow: '10px 10px 10px grey',
+    borderRadius: '30px',
   },
   backButton: {
     position: 'absolute',
     left: '0%',
     top: '52.5%',
-    width: '5%',
+    width: '4%',
     height: '5%',
   },
   errorMessage: {

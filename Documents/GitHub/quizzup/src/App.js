@@ -131,30 +131,21 @@ class App extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { width: 0, height: 0 };
+    this.state = { width: 0, height: 0, checked: false, };
     this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     // binds this once constructor loads
   }
 
-  handleSubmit(e) {
-
-    console.log(this.state.demoValue);
-    fetch('http://shiningsunnyday.pythonanywhere.com/contacts/', {
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: this.state.demoValue,
-      }),
-    }).then(this.setState({demoValue: ""}, console.log(this.state.demoValue)));
-
+  checkedChange(e) {
+    console.log(e.target.checked)
+    this.setState({checked: e.target.checked})
   }
 
 
   state = {
+    checked: false,
+    showSuccess: 0,
     about: false,
     hero: "hero__mask",
     width: 0,
@@ -183,6 +174,32 @@ class App extends Component {
 
   }
 
+
+  handleSubmit(e) {
+    console.log(this.state.demoValue);
+    console.log(this.state.checked);
+    fetch('http://shiningsunnyday.pythonanywhere.com/contacts/', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        email: this.state.demoValue,
+        beta: this.state.checked,
+      }),
+    }).then(
+      (response) => {
+        console.log("Status", response.status);
+        if(response.status == 201) {
+          this.setState({demoValue: "", showSuccess: 1});
+        } else {
+          this.setState({demoValue: "", showSuccess: -1});
+        }
+      }
+    )
+  }
+
   // <Container1 />
   // <BeforeAfterFlow elems={this.state.beforeAfterElements}/>
   // <NavBar navBar={this.state.navBar} handleClick={this.handleClick} handleChange={this.handleChange} validate={this.getValidationState}/>
@@ -203,7 +220,7 @@ class App extends Component {
             <VideoV />
             <div style={{flex: 1, backgroundColor: 'white'}}>
             </div>
-            <MailingV value={this.state.demoValue} handleSubmit={this.handleSubmit}/>
+            <MailingV value={this.state.demoValue} showSuccess={this.showSuccess} handleSubmit={this.handleSubmit}/>
           </div>
         </div>
       );
@@ -229,7 +246,7 @@ class App extends Component {
             <Video style={{zIndex: 5}}/>
             <div style={{flex: 1, }}>
             </div>
-            <Mailing style={{zIndex: 5}} self={this} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit}/>
+            <Mailing style={{zIndex: 5}} self={this} showSuccess={this.state.showSuccess} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit} checkedChange={this.checkedChange.bind(this)} checked={this.state.checked}/>
           </div>
         </div>
       </div>

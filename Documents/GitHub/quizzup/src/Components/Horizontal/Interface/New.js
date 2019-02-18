@@ -7,10 +7,14 @@ import { PacmanLoader } from 'react-spinners';
 
 const override = `css
     display: flex;
-    justify-content: center;
-    align-items: stretch;
+    justify-content: start;
     flex: 1;
     border-color: red;
+    position: relative;
+    width: 50%;
+    height: 50%;
+    left: 33%;
+    top: 20%;
 `;
 
 const New = (props) => {
@@ -32,9 +36,14 @@ const New = (props) => {
             color={'#123abc'}
             loading={props.loading}
           />
-          <label style={styles.corpusInput}>
-            <textarea name="corpus" style={styles.textarea} value={props.newCorpusValue} onChange={props.handleNewCorpus} />
-          </label>
+          {!props.loading && (
+            <label style={styles.corpusInput}>
+              <textarea name="corpus" style={styles.textarea} value={props.newCorpusValue} onChange={props.handleNewCorpus} />
+            </label>
+          )}
+          {props.loading && (
+            <div style={styles.message}>Feeding your corpus into our generator...</div>
+          )}
         </div>
         <button style={styles.submitButton} type="submit">Submit</button>
       </form>
@@ -57,8 +66,10 @@ const styles = {
     display: 'flex',
     position: 'relative',
     width: '100%',
+    margin: 0,
     flexDirection: 'column',
     alignItems: 'stretch',
+    padding: 0,
   },
   instructions: {
     flex: 1,
@@ -73,9 +84,9 @@ const styles = {
   },
   corpusAndLoader: {
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flexStart',
     flex: 10,
     padding: 0,
   },
@@ -85,15 +96,29 @@ const styles = {
     height: '100%',
     width: '100%',
     flex: 1,
-    backgroundColor: 'black'
+    backgroundColor: 'black',
+  },
+  message: {
+    position: 'relative',
+    height: '40%',
+    fontSize: '5vh',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   textarea: {
     position: 'relative',
     height: '100%',
     width: '100%',
+    borderRadius: 0,
   },
   submitButton: {
     flex: 1,
+    position: 'relative',
+    height: '100%',
+    width: '100%',
+    margin: 0,
+    borderTop: 0,
   }
 }
 

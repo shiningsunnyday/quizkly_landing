@@ -82,7 +82,6 @@ const NewInterface = ({location}) => {
   )
 }
 
-
       // <Route exact path="/app" component={Mainpage} />
 const routing = (
   <Router>
