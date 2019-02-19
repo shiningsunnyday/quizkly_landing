@@ -45,7 +45,9 @@ const New = (props) => {
             <div style={styles.message}>Feeding your corpus into our generator...</div>
           )}
         </div>
-        <button style={styles.submitButton} type="submit">Submit</button>
+        {!props.loading && (
+          <button style={styles.submitButton} type="submit">Submit</button>
+        )}
       </form>
     </div>
   )
@@ -75,7 +77,9 @@ const styles = {
     flex: 1,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
+    fontFamily: 'Lato',
+    fontSize: '2.5vh',
   },
   nameInput: {
     flex: 1,
@@ -115,6 +119,8 @@ const styles = {
   submitButton: {
     flex: 1,
     position: 'relative',
+    fontFamily: 'Lato',
+    fontSize: '2.5vh',
     height: '100%',
     width: '100%',
     margin: 0,

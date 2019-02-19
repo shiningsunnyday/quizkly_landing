@@ -1,3 +1,12 @@
+.flashcard {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 .loginForm {
   flex: 1;
   display: flex;
@@ -38,7 +47,101 @@
   flex-direction: column;
   flex: 1;
   top: 0%;
-  margin: 1%;
   background-color: white;
   overflow-y: scroll;
+}
+
+.my-progress {
+  position: relative;
+  display: block;
+  flex: 1;
+  margin: 3rem auto 0rem;
+  width: 100%;
+  max-width: 950px;
+}
+
+progress {
+  display: block;
+  position: relative;
+  top: -0.5px;
+    left: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+  background: #f1f2ec ;
+  width: 100%;
+  height: 10px;
+  background: none;
+  -webkit-transition: 1s;
+  transition: 1s;
+  will-change: contents;
+}
+progress::-webkit-progress-bar {
+  background-color: #f1f2ec;
+}
+progress::-webkit-progress-value {
+  background-color:#153f65;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+.my-progress-indicator {
+  position: absolute;
+  top: -6px;
+  left: 0;
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  background: #7aa4a9;
+  border: 3px solid #f1f2ec;
+  border-radius: 50%;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  -webkit-transition-delay: .3s;
+          transition-delay: .3s;
+  will-change: transform;
+}
+.my-progress-indicator.progress_1 {
+  left: 0;
+}
+.my-progress-indicator.progress_2 {
+  left: 9%;
+}
+.my-progress-indicator.progress_3 {
+  left: 18%;
+}
+.my-progress-indicator.progress_4{
+  left: 27%;
+}
+.my-progress-indicator.progress_5 {
+  left: 36%;
+}
+.my-progress-indicator.progress_6 {
+  left: 45%;
+}
+.my-progress-indicator.progress_7 {
+  left: 54%;
+}
+.my-progress-indicator.progress_8 {
+  left: 63%;
+}
+.my-progress-indicator.progress_9 {
+  left: 72%;
+}
+.my-progress-indicator.progress_10 {
+  left: 81%;
+}
+.my-progress-indicator.progress_11 {
+  left: 90%;
+}
+.my-progress-indicator.progress_12 {
+  left: 100%;
+}
+.my-progress-indicator.active {
+  -webkit-animation: bounce .5s forwards;
+          animation: bounce .5s forwards;
+  -webkit-animation-delay: .5s;
+          animation-delay: .5s;
+  border-color: #153f65 ;
+
 }

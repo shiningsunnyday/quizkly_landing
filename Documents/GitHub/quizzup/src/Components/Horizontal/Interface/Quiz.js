@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Question from './Question.js';
 import './Interface.css';
 
-const Quiz = (props) => {
 
+const Quiz = (props) => {
   return (
     <div className="quiz">
-      <div style={{flex: 1, display: 'flex', alignItems: 'center', flexDirection: 'row'}}>
+      <div style={styles.options}>
         <div onClick={props.toFlashcards} style={styles.toFlashcards}>Test myself with this</div>
         <div style={styles.toFlashcards}>Save after edit</div>
       </div>
@@ -24,6 +24,13 @@ const Quiz = (props) => {
 }
 
 const styles = {
+  options: {
+    position: 'relative',
+    height: '7.5vh',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
   toFlashcards: {
     display: 'flex',
     justifyContent: 'center',
@@ -31,7 +38,8 @@ const styles = {
     position: 'relative',
     fontFamily: 'Lato',
     fontSize: '2.5vh',
-    height: '5%',
+    cursor: 'pointer',
+    height: '10%',
     width: '100%',
     top: '0',
   }

@@ -28,6 +28,7 @@ class InnerInterface extends Component {
 
   state = {
     browser: null,
+    csrf: null,
     loading: false,
     needRetrieve: true,
     status: 'Login',
@@ -100,13 +101,12 @@ class InnerInterface extends Component {
     e.preventDefault();
     this.setState({loading: true})
     var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken, " token submit lol");
-    console.log(csrftoken, " token submit lol");
-    console.log(csrftoken, " token submit lol");
-    console.log(csrftoken, " token submit lol");
-    console.log(csrftoken, " token submit lol");
-    console.log(this.state.newCorpusValue);
-    console.log("Generating corpus now")
+    this.setState({csrf: csrftoken});
+    console.log(csrftoken, " let FUA");
+    console.log(csrftoken, " let aass");
+    console.log(csrftoken, " let FUA");
+    console.log(csrftoken, " let FUA");
+    console.log(csrftoken, " let FUaA");
     fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
       method: 'POST',
@@ -124,11 +124,12 @@ class InnerInterface extends Component {
         console.log("Okie done")
         this.setState({loading: false,})
         if(response.status == 201) {
-          this.setState({
-            status: 'main',
-            newCorpusName: "",
-          })
         }
+        this.setState({
+          status: 'main',
+          newCorpusName: "",
+          needRetrieve: true,
+        })
       }
     )
   }
@@ -166,7 +167,7 @@ class InnerInterface extends Component {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken, " token submit");
-    console.log(csrftoken, " token submit");
+    console.log(csrftoken, " token su bmit");
     console.log(csrftoken, " token submit");
     console.log(csrftoken, " token submit");
     console.log(csrftoken);
@@ -203,15 +204,7 @@ class InnerInterface extends Component {
   loginSubmit(e) {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
+    console.log(csrftoken, "lo l");
     fetch('http://localhost:8000/login/', {
       credentials: 'include',
       method: 'POST',
@@ -304,7 +297,7 @@ class InnerInterface extends Component {
 
   render() {
     console.log("Current status ", this.state.status)
-    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quiz", "new": "", "Signup": "login"}
+    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quizzes", "new": "", "Signup": "login"}
     let content = <LoginScreen status={this.state.status}
                     toSignUp={() => this.setState({status: 'Signup'})}
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
@@ -366,6 +359,29 @@ class InnerInterface extends Component {
       )
     }
 
+    var pathname = `/app/${backMapper[this.state.status]}`
+    if(this.state.status === 'Signup') {
+      pathname = '/login'
+    }
+
+    if(this.state.status === 'Signup') {
+      return (
+        <div>
+          <div style={styles.backButton}>
+            <Link style={styles.navButton} to={{
+              pathname: pathname,
+              state: { state: this.state }
+            }}>
+              <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
+            </Link>
+          </div>
+          <div>
+            {content}
+          </div>
+        </div>
+      )
+    }
+
     if(this.state.status === 'main') {
       return (
         <div style={styles.content}>
@@ -378,7 +394,7 @@ class InnerInterface extends Component {
       <div className="innerInterface">
         <div style={styles.backButton}>
           <Link style={styles.navButton} to={{
-            pathname: `./${backMapper[this.state.status]}`,
+            pathname: pathname,
             state: { state: this.state }
           }}>
             <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>

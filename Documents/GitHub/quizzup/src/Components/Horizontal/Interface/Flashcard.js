@@ -9,9 +9,13 @@ const Flashcard = (props) => {
   let choices = props.question.answers;
   console.log(question, "question choices", choices);
   return (
-    <div style={styles.flashcard}>
+    <div class="flashcard">
+      <div class="my-progress">
+        <progress class="my-progress-bar" min="0" max={`${props.total*10}`} value={`${props.cur*10}`} step="10" aria-labelledby="my-progress-completion"></progress>
+        <p id="my-progress-completion" class="js-my-progress-completion sr-only" aria-live="polite">0% complete</p>
+      </div>
       <Card style={styles.card} className="ui-card-shadow">
-        <div>{question}</div>
+        <div style={styles.question}>{question}</div>
         <div style={styles.choices}>
           {choices.map((choice, index) => {
             if(index == props.clickedIndex) {
@@ -34,21 +38,27 @@ const Flashcard = (props) => {
 }
 
 const styles = {
-  flashcard: {
-    backgroundColor: 'blue',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'stretch',
-    position: 'relative',
-    height: '100%',
-    width: '100%'
-  },
   question: {
     flex: 1,
+    position: 'absolute',
+    height: '20%',
+    top: '5%',
+    width: '90%',
+    left: '0%',
+    margin: '5%',
+
   },
   choices: {
     display: 'flex',
-    flexDirection: 'column'
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    flex: 5,
+    position: 'absolute',
+    height: '70%',
+    top: '25%',
+    left: '5%',
+    bottom: '5%',
+    width: '90%'
   },
   card: {
     position: 'relative',
@@ -56,10 +66,8 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-    height: '80%',
-    top: '10%',
-    left: '25%',
-    width: '50%'
+    flex: 15,
+    marginBottom: '5%',
   },
   choice: {
     flex: 1,

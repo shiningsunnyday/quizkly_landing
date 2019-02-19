@@ -18,14 +18,20 @@ const Question = (props) => {
 
 const styles = {
   quizStyle: {
-    flex: 1, display: 'flex', flexDirection: 'column', height: '25vh',
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    height: '25vh',
   },
   questionStyle: {
     flex: 1,
     backgroundColor: 'lightGreen',
     alignItems: 'center',
     justifyContent: 'center',
-    display: 'flex'
+    display: 'flex',
+    textAlign: 'center',
+    paddingLeft: '1%',
+    paddingRight: '1%'
   },
   answersStyle: {
     flex: 3,
@@ -33,16 +39,14 @@ const styles = {
     overflowY: 'scroll',
     flexDirection: 'column',
     display: 'flex',
+    alignItems: 'stretch',
   },
   answerChoiceStyle: {
     alignItems: 'center',
     justifyContent: 'center',
     display: 'flex',
     cursor: 'pointer',
-    position: 'relative',
     flex: 1,
-    left: '0%',
-    width: '100%',
     backgroundColor: 'yellow'
   }
 }

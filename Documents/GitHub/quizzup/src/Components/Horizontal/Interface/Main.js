@@ -1,5 +1,6 @@
 import React from 'react';
 import './Interface.css';
+import './Main.css'
 import Document from './Document.js';
 import {Link} from 'react-router-dom';
 
@@ -51,7 +52,7 @@ const Main = (props) => {
     )
   }
   return (
-    <div style={styles.main}>
+    <div className="main">
       <div style={styles.quizzes}>
         <div style={styles.text}>
           <Link style={styles.link} to={{
@@ -78,16 +79,6 @@ const styles = {
     color: 'black',
     display: 'flex',
     justifyContent: 'center'
-  },
-  main: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'stretch',
-    flex: 1,
-    position: 'relative',
-    width: '100%',
-    height: '100%'
   },
   quizzes: {
     flex: 1,
