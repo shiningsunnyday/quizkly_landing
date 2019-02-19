@@ -264,6 +264,9 @@ class InnerInterface extends Component {
       case 'new':
         newStatus = 'main';
         break;
+      case 'Signup':
+        newStatus = 'login';
+        break
       default:
         break;
     }
@@ -301,7 +304,7 @@ class InnerInterface extends Component {
 
   render() {
     console.log("Current status ", this.state.status)
-    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quiz", "new": ""}
+    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quiz", "new": "", "Signup": "login"}
     let content = <LoginScreen status={this.state.status}
                     toSignUp={() => this.setState({status: 'Signup'})}
                     handleChangeUserName={this.handleChangeUserName.bind(this)}
@@ -355,7 +358,15 @@ class InnerInterface extends Component {
       )
     }
 
-    if(this.state.status === 'main' || this.state.status === 'login' || this.state.status === 'Login') {
+    if(this.state.status === 'login' || this.state.status === 'Login') {
+      return (
+        <div>
+          {content}
+        </div>
+      )
+    }
+
+    if(this.state.status === 'main') {
       return (
         <div style={styles.content}>
           {content}
@@ -367,7 +378,7 @@ class InnerInterface extends Component {
       <div className="innerInterface">
         <div style={styles.backButton}>
           <Link style={styles.navButton} to={{
-            pathname: `/app/${backMapper[this.state.status]}`,
+            pathname: `./${backMapper[this.state.status]}`,
             state: { state: this.state }
           }}>
             <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
