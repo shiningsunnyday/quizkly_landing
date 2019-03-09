@@ -73,7 +73,6 @@ class Background extends Component {
   // </div>
 
   render() {
-
     return (
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
@@ -81,7 +80,7 @@ class Background extends Component {
             height: this.state.height * (1)}}></div>
           <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * (1)}}></div>
           <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
-            <Header about={this.state.about} style={{zIndex: 5,}}/>
+            <Header about={this.state.about} height="10vh" style={{zIndex: 5,}}/>
             <div style={{flex: 19,}}>
             </div>
           </div>

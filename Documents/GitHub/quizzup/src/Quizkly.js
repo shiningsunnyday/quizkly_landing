@@ -76,7 +76,7 @@ class Quizkly extends Component {
   // </div>
 
   render() {
-
+    console.log("NO")
     return (
       <div className="App">
         <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
@@ -87,7 +87,6 @@ class Quizkly extends Component {
             <Header about={this.state.about} style={{zIndex: 5,}}/>
             <Interface />
           </div>
-
         </div>
       </div>
     );

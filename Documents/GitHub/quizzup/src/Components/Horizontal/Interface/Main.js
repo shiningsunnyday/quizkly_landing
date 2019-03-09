@@ -4,9 +4,14 @@ import './Main.css'
 import Document from './Document.js';
 import {Link} from 'react-router-dom';
 
-const retrieveQuizzes = async () => {
-  console.log("Curses")
-  var csrftoken = await document.getElementById('token').getAttribute('value');
+const getToken = async () => {
+  let csrftoken = await document.getElementById('token').getAttribute('value');
+  console.log("Got token in main")
+  return csrftoken;
+}
+
+const retrieveQuizzes = async (csrftoken) => {
+  console.log("Curses");
   return fetch('http://localhost:8000/corpuses/', {
       credentials: 'include',
       method: 'GET',
@@ -39,7 +44,12 @@ const retrieveQuizzes = async () => {
 const Main = (props) => {
   console.log(props.state.needRetrieve, "need retrieve");
   if(props.state.needRetrieve) {
-    retrieveQuizzes().then(
+    getToken().then(
+      (csrftoken) => {
+        console.log("Retriving quiz with ", csrftoken);
+        return retrieveQuizzes(csrftoken);
+      }
+    ).then(
       (res) => {
         console.log("Res", res)
         props.updateMain(true, res);
@@ -102,4 +112,8 @@ const styles = {
   }
 }
 
-export default Main;
+export {
+  getToken,
+  retrieveQuizzes,
+  Main,
+}

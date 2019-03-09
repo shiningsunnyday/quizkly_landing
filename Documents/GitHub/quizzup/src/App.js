@@ -209,48 +209,53 @@ class App extends Component {
   // </div>
 
   render() {
-
-    if(this.state.height > this.state.width) {
-      return (
-        <div className="App">
-          <div style={{display: 'flex', flexDirection: 'column', height: this.state.height * 0.95, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginTop: this.state.height * 0.025, marginBottom: this.state.height * 0.025, backgroundColor: 'blue'}}>
-            <HeaderV />
-            <TitleV />
-            <VisualV />
-            <VideoV />
-            <div style={{flex: 1, backgroundColor: 'white'}}>
-            </div>
-            <MailingV value={this.state.demoValue} showSuccess={this.showSuccess} handleSubmit={this.handleSubmit}/>
-          </div>
-        </div>
-      );
-    }
-
     let classname = "hero__mask";
     if(this.state.about) {
       classname = "hero__mask_";
     }
-
-    return (
-      <div className="App">
-        <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
-          <div class={classname} style={{
-            height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
-          <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
-          <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
-            <Header about={this.state.about} style={{zIndex: 5,}}/>
-            <Title style={{zIndex: 5,}}/>
-            <Visual style={{zIndex: 5,}}/>
-          </div>
-          <div style={{display: 'flex', flexDirection: 'column', height: 2/3 * 0.975 * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, }}>
-            <Video style={{zIndex: 5}}/>
-            <div style={{flex: 1, }}>
+    if(this.state.height > this.state.width) {
+      return (
+        <div className="App">
+          <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
+            <div class={classname} style={{
+              height: this.state.height }}></div>
+            <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height }}></div>
+            <div style={{display: 'flex', flexDirection: 'column', height: this.state.height / ( 1 + 2/3 * (1/0.975)), width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
+              <Header height='5vh' about={this.state.about} style={{zIndex: 5,}}/>
+              <Title style={{zIndex: 5,}}/>
+              <Visual style={{zIndex: 5,}}/>
             </div>
-            <Mailing style={{zIndex: 5}} self={this} showSuccess={this.state.showSuccess} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit} checkedChange={this.checkedChange.bind(this)} checked={this.state.checked}/>
+            <div style={{display: 'flex', flexDirection: 'column', height: (2/3 * 0.975) / ( 1 + 2/3 * (1/0.975)) * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, }}>
+              <Video style={{zIndex: 5}}/>
+              <div style={{flex: 1, }}>
+              </div>
+              <Mailing style={{zIndex: 5}} self={this} showSuccess={this.state.showSuccess} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit} checkedChange={this.checkedChange.bind(this)} checked={this.state.checked}/>
+            </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div className="App">
+          <div style={{display: 'flex', flex: 1, flexDirection: 'column'}}>
+            <div class={classname} style={{
+              height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
+            <div class="hero__overlay hero__overlay--gradient" style={{height: this.state.height * ( 1 + 2/3 * (1/0.975))}}></div>
+            <div style={{display: 'flex', flexDirection: 'column', height: this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025,}}>
+              <Header height='10vh' about={this.state.about} style={{zIndex: 5,}}/>
+              <Title style={{zIndex: 5,}}/>
+              <Visual style={{zIndex: 5,}}/>
+            </div>
+            <div style={{display: 'flex', flexDirection: 'column', height: 2/3 * 0.975 * this.state.height, width: this.state.width * 0.95, marginLeft: this.state.width * 0.025, marginRight: this.state.width * 0.025, marginBottom: this.state.height * 0.025, }}>
+              <Video style={{zIndex: 5}}/>
+              <div style={{flex: 1, }}>
+              </div>
+              <Mailing style={{zIndex: 5}} self={this} showSuccess={this.state.showSuccess} value={this.state.demoValue} handleFormChange={this.handleFormChange.bind(this)} handleSubmit={this.handleSubmit} checkedChange={this.checkedChange.bind(this)} checked={this.state.checked}/>
+            </div>
+          </div>
+        </div>
+      );
+    }
   }
 }
 

@@ -734,7 +734,8 @@ select {
   position: fixed;
   z-index: 100;
   width: 100%;
-  background-color: white;
+  top: 0;
+  background-color: transparent;
   opacity: 1;
   transition: 0.7s; }
   .navbar--nofixed {
@@ -798,8 +799,9 @@ select {
 
 /*--- Extended and transparent version ---*/
 .navbar--extended {
-  background-color: black;
+  background-color: transparent;
   left: 0;
+  padding-top: 0;
   width: 100vw;
 }
   .navbar--extended .navbar__inner {

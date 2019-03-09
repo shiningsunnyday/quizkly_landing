@@ -24,7 +24,7 @@ const Flashcard = (props) => {
                 color = "green";
               }
               return (
-                <Button index={index} onClick={props.answerClick} style={{flex: 1, color: 'black', backgroundColor: `${color}`,}}>{choice}</Button>
+                <Button index={index} onClick={props.answerClick} style={{flex: 1, color: 'black', fontSize: '2vh', backgroundColor: `${color}`,}}>{choice}</Button>
               )
             }
             return (
@@ -42,11 +42,12 @@ const styles = {
     flex: 1,
     position: 'absolute',
     height: '20%',
+    fontSize: '1.75vh',
     top: '5%',
     width: '90%',
     left: '0%',
     margin: '5%',
-
+    textAlign: 'center'
   },
   choices: {
     display: 'flex',
@@ -64,7 +65,7 @@ const styles = {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'center',
     flex: 15,
     marginBottom: '5%',
@@ -73,6 +74,7 @@ const styles = {
     flex: 1,
     color: 'black',
     backgroundColor: 'yellow',
+    fontSize: '2vh',
   }
 }
 

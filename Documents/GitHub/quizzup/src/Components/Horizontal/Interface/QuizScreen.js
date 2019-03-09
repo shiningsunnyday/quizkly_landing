@@ -13,7 +13,7 @@ const QuizScreen = (props) => {
             pathname: `./quizzes/quiz/${index}`,
             state: {state: props.state},
           }}>
-            <div style={{fontSize: '5vh'}}>{title}</div>
+            <div style={{fontSize: '5vh', color: 'black'}}>{title}</div>
           </Link>
         </div>
       );

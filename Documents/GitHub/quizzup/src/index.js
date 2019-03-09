@@ -45,10 +45,10 @@ const Mainpage = ({location}) => {
     var sta = "error"
   }
   return (
-  <div>
-    <Background />
-    <Interface status={sta} state={location.state} browser={routing}/>
-  </div>
+    <div>
+      <Background />
+      <Interface status={sta} state={location.state} browser={routing}/>
+    </div>
   )
 }
 
@@ -89,7 +89,6 @@ const routing = (
       <Route exact path="/" component={App} />
       <Route exact path="/login" component={Login} />
       <Route exact path="/app" component={Mainpage} />
-      <Route exact path="/app/" component={Mainpage} />
       <Route exact path="/app/documents" component={Documents} />
       <Route exact path="/app/quizzes" component={QuizzesInterface} />
       <Route exact path="/app/quizzes/quiz/:id" component={QuizInterface} />

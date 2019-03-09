@@ -1,15 +1,17 @@
 import React, {Component } from 'react';
 import LoginScreen from './LoginScreen.js';
-import { BrowserRouter, withRouter, Link } from 'react-router-dom';
+import { BrowserRouter, withRouter, Link, Redirect } from 'react-router-dom';
 import Documents from './Documents.js';
 import Quiz from './Quiz.js';
 import Flashcards from './Flashcards.js';
 import Quizzes from './Quizzes.js';
 import QuizScreen from './QuizScreen.js';
-import Main from './Main.js';
+import { Main } from './Main.js';
 import New from './New.js';
 import '../../Components.css';
 import { Button } from 'primereact/button';
+import { retrieveQuizzes } from './Main.js';
+import { getToken } from './Main.js';
 
 class InnerInterface extends Component {
 
@@ -28,6 +30,7 @@ class InnerInterface extends Component {
 
   state = {
     browser: null,
+    newQuizMade: false,
     csrf: null,
     loading: false,
     needRetrieve: true,
@@ -95,49 +98,58 @@ class InnerInterface extends Component {
     this.setState({newCorpusName: e.target.value})
   }
 
-
   corpusSubmit(e) {
     console.log(this.state.newCorpusValue);
     e.preventDefault();
     this.setState({loading: true})
-    var csrftoken = document.getElementById('token').getAttribute('value');
-    this.setState({csrf: csrftoken});
-    console.log(csrftoken, " let FUA");
-    console.log(csrftoken, " let aass");
-    console.log(csrftoken, " let FUA");
-    console.log(csrftoken, " let FUA");
-    console.log(csrftoken, " let FUaA");
-    fetch('http://localhost:8000/corpuses/', {
-      credentials: 'include',
-      method: 'POST',
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        'X-CSRFToken': csrftoken
-      },
-      body: JSON.stringify({
-        name: this.state.newCorpusName,
-        content: this.state.newCorpusValue,
-      }),
+    getToken().then((csrftoken) => {
+      this.setState({csrf: csrftoken})
+      console.log("Got token")
+      return csrftoken;
+    }).then(async (csrftoken) => {
+      let response = await fetch('http://localhost:8000/corpuses/', {
+        credentials: 'include',
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify({
+          name: this.state.newCorpusName,
+          content: this.state.newCorpusValue,
+        }),
+      })
+      return response
+    }).then(async () => {
+      let updatedQuizzes = await retrieveQuizzes();
+      console.log(updatedQuizzes);
+      return updatedQuizzes;
     }).then(
-      (response) => {
-        console.log("Okie done")
-        this.setState({loading: false,})
-        if(response.status == 201) {
-        }
-        this.setState({
-          status: 'main',
-          newCorpusName: "",
-          needRetrieve: true,
-        })
+      (updatedQuizzes) => {
+        this.updateMain(true, updatedQuizzes);
       }
     )
   }
 
+  // (response) => {
+  //   console.log("Okie done")
+  //   this.setState({loading: false,})
+  //   if(response.status == 201) {
+  //   }
+  //   this.setState({
+  //     status: 'main',
+  //     newCorpusName: "",
+  //     needRetrieve: true,
+  //   })
+  // }
+
   updateMain(bool, value) {
     console.log("Update main", bool)
-    if(bool) {
-      this.setState({documents: value, needRetrieve: false,})
+    if(bool && this.state.status == 'new') {
+      this.setState({status: 'quizzes', loading: false, documents: value, newQuizMade: true, needRetrieve: false})
+    } else if(bool) {
+      this.setState({documents: value, loading: false, needRetrieve: false})
     } else {
       this.setState({status: 'error', needRetrieve: false})
     }
@@ -271,9 +283,10 @@ class InnerInterface extends Component {
   }
 
   getQuizzes() {
+
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
+    console.log(csrftoken, " about to submit tokena");
     fetch('http://localhost:8000/quizzes/', {
       credentials: 'include',
       method: 'GET',
@@ -295,6 +308,43 @@ class InnerInterface extends Component {
     );
   }
 
+  saveAfterEdit(e, edits, quiz_id) {
+    getToken().then(
+      (csrftoken) => {
+        return fetch(`http://localhost:8000/corpuses/`, {
+          credentials: 'include',
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify({
+            quiz_id: quiz_id,
+            edits: edits
+          }),
+        })
+      }
+    ).then(function(response) {
+      return response.json()
+    }).then(function(data) {
+      console.log(data)
+      return data.question_set.map((ques) => {
+        return ({
+          question: ques.question,
+          answers: ques.distractor_set.map((distractor) => {
+            return distractor.text
+          }),
+          correctIndex: ques.correct,
+        })
+      })
+    }).then((data) => {
+      this.state.documents[quiz_id].quiz = data;
+      this.setState({documents: this.state.documents});
+    })
+
+  }
+
   render() {
     console.log("Current status ", this.state.status)
     const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quizzes", "new": "", "Signup": "login"}
@@ -306,10 +356,19 @@ class InnerInterface extends Component {
                     loginSubmit={this.loginSubmit.bind(this)}
                     signupSubmit={this.signupSubmit.bind(this)}/>
 
+
     if(this.state.status == 'documents') {
       content = <Quizzes documents={this.state.documents}/>
     }
     if(this.state.status == 'quizzes') {
+      if(this.state.newQuizMade == true) {
+        let redirectState = this.state;
+        redirectState.newQuizMade = false;
+        return <Redirect to={{
+            pathname: `../app/quizzes/quiz/${this.state.documents.length - 1}`,
+            state: { state: redirectState }
+          }}/>
+      }
       console.log(this.state)
       content = <QuizScreen editQuiz={this.editQuiz.bind(this)} state={this.state} titles={this.state.documents.map((document) => {
         return document.title;
@@ -322,11 +381,17 @@ class InnerInterface extends Component {
     }
     if(this.state.status == 'quiz') {
       console.log(this.state.documents[this.state.index], " is documents at index");
-      content = <Quiz quiz={this.state.documents[this.state.index]} toFlashcards={this.toFlashcards.bind(this)} click={this.didClick.bind(this)}/>
+      content = <Quiz quiz={this.state.documents[this.state.index]}
+                  this={this}
+                  index={this.state.index}
+                  toFlashcards={this.toFlashcards.bind(this)}
+                  saveAfterEdit={this.saveAfterEdit.bind(this)}
+                  click={this.didClick.bind(this)}/>
     }
 
     if(this.state.status == 'flashcards') {
       let quiz = this.state.documents[this.state.index];
+      console.log(quiz);
       content = <Flashcards quiz={quiz} />
     }
 
@@ -344,8 +409,10 @@ class InnerInterface extends Component {
           <div style={styles.errorMessage}>
             You have not logged in. Placeholder quizzes will be shown.
           </div>
-          <div style={styles.content}>
-            {content}
+          <div className="innerInterface">
+            <div style={styles.content}>
+              {content}
+            </div>
           </div>
         </div>
       )
@@ -384,8 +451,10 @@ class InnerInterface extends Component {
 
     if(this.state.status === 'main') {
       return (
-        <div style={styles.content}>
-          {content}
+        <div className="innerInterface">
+          <div style={styles.content}>
+            {content}
+          </div>
         </div>
       )
     }
