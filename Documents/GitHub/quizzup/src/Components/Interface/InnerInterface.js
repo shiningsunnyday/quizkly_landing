@@ -8,9 +8,11 @@ import Quizzes from './Quizzes.js';
 import QuizScreen from './QuizScreen.js';
 import { Main } from './Main.js';
 import New from './New.js';
-import '../../Components.css';
+import '../Components.css';
 import { Button } from 'primereact/button';
 import { retrieveQuizzes } from './Main.js';
+import {Sidebar} from 'primereact/sidebar';
+import {Topbar} from './Topbar.js';
 import { getToken } from './Main.js';
 
 class InnerInterface extends Component {
@@ -30,6 +32,7 @@ class InnerInterface extends Component {
 
   state = {
     browser: null,
+    sidebar: {quizNo: -1, quizName: ""},
     newQuizMade: false,
     csrf: null,
     loading: false,
@@ -89,12 +92,10 @@ class InnerInterface extends Component {
   }
 
   handleNewCorpus(e) {
-    console.log(e, e.target.value)
     this.setState({newCorpusValue: e.target.value})
   }
 
   handleNewCorpusName(e) {
-    console.log(e, e.target.value)
     this.setState({newCorpusName: e.target.value})
   }
 
@@ -179,18 +180,6 @@ class InnerInterface extends Component {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
     console.log(csrftoken, " token submit");
-    console.log(csrftoken, " token su bmit");
-    console.log(csrftoken, " token submit");
-    console.log(csrftoken, " token submit");
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
-    console.log(csrftoken);
-    console.log(csrftoken, " about to submit token");
-    console.log(csrftoken);
     fetch('http://localhost:8000/signup/', {
       credentials: 'include',
       method: 'POST',
@@ -216,7 +205,6 @@ class InnerInterface extends Component {
   loginSubmit(e) {
     e.preventDefault();
     var csrftoken = document.getElementById('token').getAttribute('value');
-    console.log(csrftoken, "lo l");
     fetch('http://localhost:8000/login/', {
       credentials: 'include',
       method: 'POST',
@@ -345,135 +333,184 @@ class InnerInterface extends Component {
 
   }
 
-  render() {
-    console.log("Current status ", this.state.status)
-    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quizzes", "new": "", "Signup": "login"}
-    let content = <LoginScreen status={this.state.status}
-                    toSignUp={() => this.setState({status: 'Signup'})}
-                    handleChangeUserName={this.handleChangeUserName.bind(this)}
-                    handleChangePassword={this.handleChangePassword.bind(this)}
-                    handleChangeContact={this.handleChangeContact.bind(this)}
-                    loginSubmit={this.loginSubmit.bind(this)}
-                    signupSubmit={this.signupSubmit.bind(this)}/>
-
-
-    if(this.state.status == 'documents') {
-      content = <Quizzes documents={this.state.documents}/>
-    }
-    if(this.state.status == 'quizzes') {
-      if(this.state.newQuizMade == true) {
-        let redirectState = this.state;
-        redirectState.newQuizMade = false;
-        return <Redirect to={{
-            pathname: `../app/quizzes/quiz/${this.state.documents.length - 1}`,
-            state: { state: redirectState }
-          }}/>
+  editTitle(e, newTitle) {
+    getToken().then(
+      (csrftoken) => {
+        return fetch(`http://localhost:8000/quizzes/${newTitle.index}/`, {
+          credentials: 'include',
+          method: 'PUT',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+          body: JSON.stringify({
+            newTitle: newTitle.newTitle
+          }),
+        })
       }
-      console.log(this.state)
-      content = <QuizScreen editQuiz={this.editQuiz.bind(this)} state={this.state} titles={this.state.documents.map((document) => {
-        return document.title;
-      })} />
-    }
-    if(this.state.status == 'main' || this.state.status == 'error') {
-      console.log("Documents", this.state.documents)
-      console.log(this.state)
-      content = <Main updateMain={this.updateMain.bind(this)} state={this.state}/>
-    }
-    if(this.state.status == 'quiz') {
-      console.log(this.state.documents[this.state.index], " is documents at index");
-      content = <Quiz quiz={this.state.documents[this.state.index]}
-                  this={this}
-                  index={this.state.index}
-                  toFlashcards={this.toFlashcards.bind(this)}
-                  saveAfterEdit={this.saveAfterEdit.bind(this)}
-                  click={this.didClick.bind(this)}/>
-    }
+    ).then(function(response) {
+      return response.json();
+    }).then((data) => {
+      this.state.documents[newTitle.index].title = data.name
+      this.setState({documents: this.state.documents})
+    })
+  }
 
-    if(this.state.status == 'flashcards') {
-      let quiz = this.state.documents[this.state.index];
-      console.log(quiz);
-      content = <Flashcards quiz={quiz} />
-    }
+  deleteTitle(e, index) {
+    getToken().then(
+      (csrftoken) => {
+        return fetch(`http://localhost:8000/quizzes/${index}/`, {
+          credentials: 'include',
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrftoken
+          },
+        })
+      }
+    ).then((response) => {
+      if(response.status == 204) {
+        this.state.documents.splice(index, 1);
+        this.setState({documents: this.state.documents});
+      }
+    })
+  }
 
-    if(this.state.status == 'new') {
-      console.log("is loading ", this.state.loading)
-      content = <New handleNewCorpusName={this.handleNewCorpusName.bind(this)}
-        handleNewCorpus={this.handleNewCorpus.bind(this)}
-        corpusSubmit={this.corpusSubmit.bind(this)}
-        loading={this.state.loading}/>
-    }
+  showSideBar(index) {
+    this.state.sidebar.quizNo = index;
+    if(index >= 0)
+      this.state.sidebar.quizName = this.state.documents[index].title
+    this.setState({sidebar: this.state.sidebar})
+  }
 
-    if(this.state.status === 'error') {
-      return (
-        <div>
-          <div style={styles.errorMessage}>
-            You have not logged in. Placeholder quizzes will be shown.
+  render() {
+    const backMapper = {"quizzes": "", "quiz": "quizzes", "flashcards": "quizzes", "new": "", "Signup": "login"}
+    let content = null;
+    switch(this.state.status) {
+      case "documents":
+        content = <Quizzes documents={this.state.documents}/>
+        break;
+      case "quizzes":
+        if(this.state.newQuizMade == true) {
+          let redirectState = this.state;
+          redirectState.newQuizMade = false;
+          return <Redirect to={{
+              pathname: `../app/quizzes/quiz/${this.state.documents.length - 1}`,
+              state: { state: redirectState }
+            }}/>
+        }
+        content = <QuizScreen editQuiz={this.editQuiz.bind(this)} state={this.state}
+          showSideBar={this.showSideBar.bind(this)} titles={this.state.documents.map((document) => {
+          return document.title;
+        })} />
+        break;
+      case "quiz":
+        content = <Quiz quiz={this.state.documents[this.state.index]}
+                    this={this}
+                    index={this.state.index}
+                    toFlashcards={this.toFlashcards.bind(this)}
+                    saveAfterEdit={this.saveAfterEdit.bind(this)}
+                    click={this.didClick.bind(this)}/>
+        break;
+      case "flashcards":
+        let quiz = this.state.documents[this.state.index];
+        content = <Flashcards quiz={quiz} />
+        break;
+      case "new":
+        content = <New handleNewCorpusName={this.handleNewCorpusName.bind(this)}
+          handleNewCorpus={this.handleNewCorpus.bind(this)}
+          corpusSubmit={this.corpusSubmit.bind(this)}
+          loading={this.state.loading}/>
+        break;
+      case "main": // handles both main and error cases
+        content = <Main updateMain={this.updateMain.bind(this)} state={this.state}/>
+        break;
+      case "error":
+        content = <Main updateMain={this.updateMain.bind(this)} state={this.state}/>
+        break;
+      default:
+        content = <LoginScreen status={this.state.status}
+                      toSignUp={() => this.setState({status: 'Signup'})}
+                      handleChangeUserName={this.handleChangeUserName.bind(this)}
+                      handleChangePassword={this.handleChangePassword.bind(this)}
+                      handleChangeContact={this.handleChangeContact.bind(this)}
+                      loginSubmit={this.loginSubmit.bind(this)}
+                      signupSubmit={this.signupSubmit.bind(this)}/>
+    }
+    var pathname = `/app/${backMapper[this.state.status]}`
+    if(this.state.status === 'Signup') {
+      pathname = '/login'
+    }
+    console.log(this.state.status)
+    switch(this.state.status) {
+      case "error":
+        return (
+          <div>
+            <div style={styles.errorMessage}>
+              You have not logged in. Placeholder quizzes will be shown.
+            </div>
+            <div className="innerInterface">
+              <div style={styles.content}>
+                {content}
+              </div>
+            </div>
           </div>
+        )
+        break;
+      case "login":
+        return (
+          <div>
+            {content}
+          </div>
+        )
+        break;
+      case "Signup":
+        return (
+          <div>
+            <div style={styles.backButton}>
+              <Link style={styles.navButton} to={{
+                pathname: pathname,
+                state: { state: this.state }
+              }}>
+                <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
+              </Link>
+            </div>
+            <div>
+              {content}
+            </div>
+          </div>
+        )
+        break;
+      case "main":
+        return (
           <div className="innerInterface">
             <div style={styles.content}>
               {content}
             </div>
           </div>
-        </div>
-      )
-    }
-
-    if(this.state.status === 'login' || this.state.status === 'Login') {
-      return (
-        <div>
-          {content}
-        </div>
-      )
-    }
-
-    var pathname = `/app/${backMapper[this.state.status]}`
-    if(this.state.status === 'Signup') {
-      pathname = '/login'
-    }
-
-    if(this.state.status === 'Signup') {
-      return (
-        <div>
-          <div style={styles.backButton}>
-            <Link style={styles.navButton} to={{
-              pathname: pathname,
-              state: { state: this.state }
-            }}>
-              <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
-            </Link>
+        )
+      default:
+        return (
+          <div className="innerInterface">
+            <Topbar sidebar={this.state.sidebar} editTitle={this.editTitle.bind(this)}
+              deleteTitle={this.deleteTitle.bind(this)}
+              showSideBar={this.showSideBar.bind(this)}/>
+            <div style={styles.backButton}>
+              <Link style={styles.navButton} to={{
+                pathname: pathname,
+                state: { state: this.state }
+              }}>
+                <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
+              </Link>
+            </div>
+            <div style={styles.content}>
+              {content}
+            </div>
           </div>
-          <div>
-            {content}
-          </div>
-        </div>
-      )
+        );
     }
-
-    if(this.state.status === 'main') {
-      return (
-        <div className="innerInterface">
-          <div style={styles.content}>
-            {content}
-          </div>
-        </div>
-      )
-    }
-
-    return (
-      <div className="innerInterface">
-        <div style={styles.backButton}>
-          <Link style={styles.navButton} to={{
-            pathname: pathname,
-            state: { state: this.state }
-          }}>
-            <Button style={{position: 'relative', height: '100%', width: '100%'}} onClick={this.backTrack.bind(this)} icon="pi pi-arrow-left"/>
-          </Link>
-        </div>
-        <div style={styles.content}>
-          {content}
-        </div>
-      </div>
-    );
   }
 
 }

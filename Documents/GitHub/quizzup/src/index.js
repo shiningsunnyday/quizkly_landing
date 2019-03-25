@@ -7,11 +7,11 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import App from './App';
 import Quizkly from './Quizkly';
-import Background from './Routes/Background';
+import Background from './Background';
 import * as serviceWorker from './serviceWorker';
-import Interface from './Components/Horizontal/Interface';
-import Quiz from './Components/Horizontal/Interface/Quiz';
-import New from './Components/Horizontal/Interface/New';
+import Interface from './Components/Interface/Interface';
+import Quiz from './Components/Interface/Quiz';
+import New from './Components/Interface/New';
 
 // const Application = () => (
 //   <div>

@@ -97,7 +97,7 @@ class Flashcards extends Component  {
         <div style={styles.welcomeScreen}>
           <div style={styles.scoreBoard}>
             <div style={{display: 'flex', flex: 1, fontSize: '5vw', justifyContent: 'center', alignItems: 'center'}}>You received a score of</div>
-            <div style={{display: 'flex', flex: 2, fontSize: '30vw', justifyContent: 'center', alignItems: 'center'}}>{this.state.correct}</div>
+            <div style={{display: 'flex', flex: 2, fontSize: '20vh', justifyContent: 'center', alignItems: 'center'}}>{this.state.correct}</div>
             <div style={{display: 'flex', flex: 1, fontSize: '5vw', justifyContent: 'center', alignItems: 'center'}}>out of {this.state.quiz.quiz.length}.</div>
           </div>
         </div>

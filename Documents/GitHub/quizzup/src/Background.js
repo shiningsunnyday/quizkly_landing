@@ -1,27 +1,24 @@
 import React, { Component } from 'react';
-import '../App.css';
+import './App.css';
 import { Link } from 'react-router-dom';
-import '../style.css';
-import '../Components/Components.css';
-
-import Header from '../Components/Horizontal/Header.js';
-import Mailing from '../Components/Horizontal/Mailing.js';
-import Title from '../Components/Horizontal/Title.js';
-import Video from '../Components/Horizontal/Video.js';
-import Visual from '../Components/Horizontal/Visual.js';
-import Interface from '../Components/Horizontal/Interface.js';
+import './style.css';
+import './Components/Components.css';
+import Header from './Components/Landing/Header.js';
+import Mailing from './Components/Landing/Mailing.js';
+import Title from './Components/Landing/Title.js';
+import Video from './Components/Landing/Video.js';
+import Visual from './Components/Landing/Visual.js';
+import Interface from './Components/Interface/Interface.js';
 
 class Background extends Component {
 
   componentDidMount() {
     this.updateWindowDimensions();
-
     var whoWeAre = document.getElementById("whoWeAre");
     whoWeAre.style.cursor = 'pointer';
     whoWeAre.onclick = function() {
       this.setState({about: !this.state.about});
     }.bind(this)
-
     window.addEventListener('resize', this.updateWindowDimensions);
   }
 

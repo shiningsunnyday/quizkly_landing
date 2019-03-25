@@ -1,6 +1,6 @@
 import React from 'react';
-import InnerInterface from './Interface/InnerInterface.js'
-import './Interface/Interface.css';
+import InnerInterface from './InnerInterface.js'
+import './Interface.css';
 
 const Interface = (props) => {
   console.log(props.state)

@@ -4,10 +4,8 @@ import { Card } from 'primereact/card';
 import { Button } from 'primereact/button';
 
 const Flashcard = (props) => {
-  console.log("FLASHCARD PROPS ", props)
   let question = props.question.question;
   let choices = props.question.answers;
-  console.log(question, "question choices", choices);
   return (
     <div class="flashcard">
       <div class="my-progress">
